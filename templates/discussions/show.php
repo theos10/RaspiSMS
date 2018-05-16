@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
-	$incs = new internalIncs();
-	$incs->head('Discussions - Show All');
+	
+	$this->render('incs/head', 'Discussions - Show All')
 ?>
 <div id="wrapper">
 <?php
-	$incs->nav('discussions');
+	$this->render(incs/nav, 'discussions')
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -146,4 +146,4 @@
 	});
 </script>
 <?php
-	$incs->footer();
+	$this->render('incs/footer');

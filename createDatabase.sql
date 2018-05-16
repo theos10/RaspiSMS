@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS transfers
 	FOREIGN KEY (id_received) REFERENCES receiveds (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS sms_stop
+CREATE TABLE IF NOT EXISTS sms_stops
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	number VARCHAR(20) NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS webhook_queries
 #On insert les données par défaut dans les settings
 INSERT INTO settings (name, value)
 VALUES ('transfer', '1'),
-('sms_stop', '1'),
+('sms_stops', '1'),
 ('detect_url', '1'),
 ('default_phone_country', 'fr'), 
 ('preferred_phone_country', 'fr,be,ca'),

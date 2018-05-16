@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
-	$incs = new internalIncs();
-	$incs->head('SMS STOP - Show All');
+	
+	$this->render('incs/head', 'SMS STOP - Show All')
 ?>
 <div id="wrapper">
 <?php
-	$incs->nav('smsstop');
+	$this->render(incs/nav, 'smsstop')
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -116,4 +116,4 @@
 	});
 </script>
 <?php
-	$incs->footer();
+	$this->render('incs/footer');

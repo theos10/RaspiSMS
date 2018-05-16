@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
-	$incs = new internalIncs();
-	$incs->head('Command - Add');
+	
+	$this->render('incs/head', 'Command - Add')
 ?>
 <div id="wrapper">
 <?php
-	$incs->nav('commands');
+	$this->render(incs/nav, 'commands')
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -69,4 +69,4 @@
 	</div>
 </div>
 <?php
-	$incs->footer();
+	$this->render('incs/footer');

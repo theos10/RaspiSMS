@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
-	$incs = new internalIncs();
-	$incs->head('Contacts - Show All');
+	
+	$this->render('incs/head', 'Contacts - Show All')
 ?>
 <div id="wrapper">
 <?php
-	$incs->nav('contacts');
+	$this->render(incs/nav, 'contacts')
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -81,4 +81,4 @@
 	});
 </script>
 <?php
-	$incs->footer();
+	$this->render('incs/footer');
