@@ -1,5 +1,6 @@
 <?php
-	class Tools extends InternalController
+    namespace controllers\internals;
+	class Tools extends \InternalController
 	{
 		/**
 		 * Cette fonction parse un numéro pour le retourner sans espaces, etc.
@@ -66,7 +67,7 @@
 		 */
 		public static function validate_date($date, $format)
 		{
-			$objectDate = DateTime::createFromFormat($format, $date);
+			$objectDate = \DateTime::createFromFormat($format, $date);
 			return ($objectDate && $objectDate->format($format) == $date);
 		}
 

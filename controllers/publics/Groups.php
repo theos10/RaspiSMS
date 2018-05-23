@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des groups
 	 */
-	class Groups extends Controller
+	class Groups extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -18,6 +19,7 @@
 
             $this->internalGroups = new \controllers\internals\Groups($this->bdd);
             $this->internalContacts = new \controllers\internals\Contacts($this->bdd);
+            $this->internalEvents = new \controllers\internals\Events($this->bdd);
 
 			\controllers\internals\Tools::verify_connect();
         }
@@ -27,7 +29,7 @@
 		 */	
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $groups = $this->internalGroups->get_list(25, $page);
     
             foreach ($groups as $key => $group)
@@ -106,7 +108,7 @@
 			$name = $_POST['name'] ?? false;
 			$contacts = $_POST['contacts'] ?? false;
 
-			if (!$name || !$contacts))
+			if (!$name || !$contacts)
 			{
                 \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('danger', 'Des champs sont manquants !');
                 header('Location: ' . $this->generateUrl('Groups', 'add'));
@@ -120,7 +122,7 @@
 				return false;
 			}
 
-            \controllers\internals\Events::create(['type' => 'GROUP_ADD', 'text' => 'Ajout groupe : ' . $name]);
+            $this->internalEvents->create(['type' => 'GROUP_ADD', 'text' => 'Ajout groupe : ' . $name]);
 
             \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('success', 'Le groupe a bien été créé.');
 			header('Location: ' . $this->generateUrl('Groups', 'list'));
@@ -159,8 +161,9 @@
 		/**
 		 * Cette fonction retourne la liste des groups sous forme JSON
 		 */
-		public function jsonGetGroups()
+		public function json_list()
 		{
+            header('Content-Type: application/json');
             echo json_encode($this->internalGroups->get_list());
 		}
 	}

@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Command - Edit')
+	$this->render('incs/head', ['title' => 'Command - Edit'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'commands')
+	$this->render('incs/nav', ['page' => 'commands'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -45,21 +45,21 @@
 										<div class="form-group">
 											<label>Nom commande</label>
 											<div class="form-group">
-												<input value="<?php secho($command['name']); ?>" name="commands[<?php secho($command['id']); ?>][name]" class="form-control" type="text" placeholder="Nom commande" autofocus required>
+												<input value="<?php $this->s($command['name']); ?>" name="commands[<?php $this->s($command['id']); ?>][name]" class="form-control" type="text" placeholder="Nom commande" autofocus required>
 											</div>
 										</div>	
 										<div class="form-group">
 											<label>Commande à appeler (la commande sera appelée depuis le dossier "<?php echo PWD_SCRIPTS; ?>")</label>
 											<div class="form-group input-group">
 												<span class="input-group-addon"><span class="fa fa-link"></span></span>
-												<input value="<?php secho($command['script']); ?>" name="commands[<?php secho($command['id']); ?>][script]" class="form-control" type="text" placeholder="Ex : chauffage/monter.sh" autofocus required>
+												<input value="<?php $this->s($command['script']); ?>" name="commands[<?php $this->s($command['id']); ?>][script]" class="form-control" type="text" placeholder="Ex : chauffage/monter.sh" autofocus required>
 											</div>
 										</div>	
 										<div class="form-group">
 											<label>Niveau administrateur obligatoire</label>
 											<div class="form-group">
-												<input <?php echo $command['admin'] ? 'checked' : ''; ?> name="commands[<?php secho($command['id']); ?>][admin]" type="radio" value="1" required /> Oui 
-												<input <?php echo $command['admin'] ? '' : 'checked'; ?> name="commands[<?php secho($command['id']); ?>][admin]" type="radio" value="0" required /> Non
+												<input <?php echo $command['admin'] ? 'checked' : ''; ?> name="commands[<?php $this->s($command['id']); ?>][admin]" type="radio" value="1" required /> Oui 
+												<input <?php echo $command['admin'] ? '' : 'checked'; ?> name="commands[<?php $this->s($command['id']); ?>][admin]" type="radio" value="0" required /> Non
 											</div>
 										</div>
 										<hr/>

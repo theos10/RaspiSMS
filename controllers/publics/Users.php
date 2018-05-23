@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des users
 	 */
-	class Users extends Controller
+	class Users extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -17,6 +18,7 @@
             $this->model = $model;
 
             $this->internalUsers = new \controllers\internals\Users($this->bdd);
+            $this->internalEvents = new \controllers\internals\Events($this->bdd);
 
 			\controllers\internals\Tools::verify_connect();
         }
@@ -26,7 +28,7 @@
 		 */	
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $users = $this->internalUsers->get_list(25, $page);
             $this->render('users/list', ['users' => $users]);
         }    
@@ -119,7 +121,7 @@
 				return false;
 			}
 
-            \controllers\internals\Events::create(['type' => 'CONTACT_ADD', 'text' => 'Ajout de l\'utilisateur : ' . $email . '.'));
+            $this->internalEvents->create(['type' => 'CONTACT_ADD', 'text' => 'Ajout de l\'utilisateur : ' . $email . '.'));
 
 			\modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('success', 'L\'utilisateur a bien été créé.');
 			header('Location: ' . $this->generateUrl('Users', 'list'));

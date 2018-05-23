@@ -48,7 +48,7 @@
 									<label>Type de Webhook</label>
 									<select name="type" class="form-control" required>
 										<?php foreach (internalConstants::WEBHOOK_TYPE as $key => $value) { ?>
-											<option value="<?php secho($value); ?>"><?php secho($key); ?></option>
+											<option value="<?php $this->s($value); ?>"><?php $this->s($key); ?></option>
 										<?php } ?>
 									</select>
 								</div>	

@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'SMS STOP - Show All')
+	$this->render('incs/head', ['title' => 'SMS STOP - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'smsstop')
+	$this->render('incs/nav', ['page' => 'smsstop'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -49,9 +49,9 @@
 										{
 											?>
 											<tr>
-												<td><?php secho($smsStop['id']); ?></td>
-												<td><?php secho($smsStop['number']); ?></td>
-												<?php if ($_SESSION['admin']) { ?><td><input type="checkbox" value="<?php secho($smsStop['id']); ?>"></td><?php } ?>
+												<td><?php $this->s($smsStop['id']); ?></td>
+												<td><?php $this->s($smsStop['number']); ?></td>
+												<?php if ($_SESSION['admin']) { ?><td><input type="checkbox" value="<?php $this->s($smsStop['id']); ?>"></td><?php } ?>
 											</tr>
 											<?php
 										}
@@ -81,7 +81,7 @@
 										}
 
 										$numero_page = 'Page : ' . ($page + 1);
-										secho($numero_page);
+										$this->s($numero_page);
 
 										if ($limit == $nbResults)
 										{

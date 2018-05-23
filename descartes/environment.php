@@ -6,14 +6,14 @@
 	//Pour les chemin, la norme est de ne pas mettre de '/' final
 
 	//On définit l'arborescence URL pour accéder à la racine du site (typiquement, si votre site est un dossier et ne dispose pas d'un nom de domaine dédié)
-	$urlDirPath = '/RaspiSMS';
+	$urlDirPath = '';
 
 	//On calcul les chemins de base du système
 	$protocol = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
 	$serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost';
 	$port = isset($_SERVER['SERVER_PORT']) ? ($_SERVER['SERVER_PORT'] == 80) ? '' : $_SERVER['SERVER_PORT'] : '';
 
-	define('PWD', substr(__DIR__, 0, strrpos(__DIR__, '/'))); //On défini le chemin de base du site
+    define('PWD', substr(__DIR__, 0, strrpos(__DIR__, '/'))); //On défini le chemin de base du site
 	define('HTTP_PWD', $protocol . $serverName . $port . $urlDirPath); //On défini l'adresse url du site
 
 	//On définit le chemin des ressources back

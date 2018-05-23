@@ -128,7 +128,7 @@
 
         /**
          * Récupère le nombre de SMS envoyés pour chaque jour depuis une date
-         * @param DateTime $date : La date depuis laquelle on veux les SMS
+         * @param \DateTime $date : La date depuis laquelle on veux les SMS
          * @return array : Tableau avec le nombre de SMS depuis la date
 		 */
 		public function count_by_day_since ($date)
@@ -146,4 +146,5 @@
 
             return $this->runQuery($query, $params);
         }
+        
     }

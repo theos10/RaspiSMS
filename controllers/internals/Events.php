@@ -1,8 +1,10 @@
 <?php
-	/**
+    namespace controllers\internals;
+
+    /**
      * Classe des Events
 	 */
-	class Events extends Controller
+	class Events extends \InternalController
 	{
 
 		/**
@@ -12,10 +14,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des events
          */	
-		public function getList ($bdd, $nb_entry = false, $page = false)
+		public function getList ($nb_entry = false, $page = false)
 		{
 			//Recupération des events
-            $modelEvents = new \Models\Events($this->bdd);
+            $modelEvents = new \models\Events($this->bdd);
             return $modelEvents->getList($nb_entry, $nb_entry * $page);
 		}
 
@@ -26,7 +28,7 @@
          */
         public function get_lasts_by_date ($nb_entry = false)
         {
-            $modelEvents = new \Models\Events($this->bdd);
+            $modelEvents = new \models\Events($this->bdd);
             return $modelEvents->get_lasts_by_date($nb_entry);
         }
 
@@ -37,7 +39,7 @@
 		 */
 		public function delete ($ids)
         {
-            $modelEvents = new \Models\Events($this->bdd);
+            $modelEvents = new \models\Events($this->bdd);
             return $modelEvents->delete_by_ids($ids);
 		}
 
@@ -48,8 +50,8 @@
 		 */
         public function create ($event)
 		{
-            $modelEvents = new \Models\Events($this->bdd);
-            return $modelEvents->create($event);
+            $modelEvents = new \models\Events($this->bdd);
+            return $modelEvents->insert($event);
 		}
 
 	}

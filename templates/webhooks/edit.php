@@ -45,14 +45,14 @@
 										<div class="form-group">
 											<label>URL cible</label>
 											<div class="form-group">
-											<input value="<?php secho($webhook['url']); ?>" name="webhooks[<?php secho($webhook['id']); ?>][url]" class="form-control" type="text" placeholder="http://example.fr/webhook/" autofocus required>
+											<input value="<?php $this->s($webhook['url']); ?>" name="webhooks[<?php $this->s($webhook['id']); ?>][url]" class="form-control" type="text" placeholder="http://example.fr/webhook/" autofocus required>
 											</div>
 										</div>	
 										<div class="form-group">
 											<label>Type de Webhook</label>
-											<select name="webhooks[<?php secho($webhook['id']); ?>][type]" class="form-control" required>
+											<select name="webhooks[<?php $this->s($webhook['id']); ?>][type]" class="form-control" required>
 												<?php foreach (internalConstants::WEBHOOK_TYPE as $key => $value) { ?>
-													<option <?php echo ($webhook['type'] == $value ? 'selected' : ''); ?> value="<?php secho($value); ?>"><?php secho($key); ?></option>
+													<option <?php echo ($webhook['type'] == $value ? 'selected' : ''); ?> value="<?php $this->s($value); ?>"><?php $this->s($key); ?></option>
 												<?php } ?>
 											</select>
 										</div>	

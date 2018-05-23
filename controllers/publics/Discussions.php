@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des discussions
 	 */
-	class discussions extends Controller
+	class discussions extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
 		{
             global $bdd;
             global $model;
@@ -72,7 +73,7 @@
 		 */
 		function get_messages($number, $transaction_id)
 		{
-			$now = new DateTime();
+			$now = new \DateTime();
 			$now = $now->format('Y-m-d H:i:s');
 
             $sendeds = $this->internalSendeds->get_by_target($number);
@@ -142,7 +143,7 @@
 				return false;
 			}	
 
-			$now = new DateTime();
+			$now = new \DateTime();
 			$now = $now->format('Y-m-d H:i:s');
             
             $scheduled = [];
@@ -213,7 +214,7 @@
 		 */
 		function checkreceiveds ($number)
 		{
-			$now = new DateTime();
+			$now = new \DateTime();
 			$now = $now->format('Y-m-d H:i');
 			
 			$_SESSION['discussion_last_checkreceiveds'] = isset($_SESSION['discussion_last_checkreceiveds']) ? $_SESSION['discussion_last_checkreceiveds'] : $now;

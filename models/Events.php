@@ -83,7 +83,7 @@
          */
         public function insert ($event)
         {
-            $result = $this->insertIntoTable('events', $events);
+            $result = $this->insertIntoTable('events', $event);
 
             if (!$result)
             {

@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Discussions - Show All')
+	$this->render('incs/head', ['title' => 'Discussions - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'discussions')
+	$this->render('incs/nav', ['page' => 'discussions'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -47,9 +47,9 @@
 										foreach ($discussions as $discussion)
 										{
 											?>
-												<tr class="goto" url="<?php secho($this->generateUrl('discussions', 'show', [$discussion['number']])); ?>">
-												<td><?php secho($discussion['at']); ?></td>
-												<td><?php secho(isset($discussion['contact']) ? $discussion['contact'] . ' (' . $discussion['number'] . ')' : $discussion['number']); ?></td>
+												<tr class="goto" url="<?php $this->s($this->generateUrl('discussions', 'show', [$discussion['number']])); ?>">
+												<td><?php $this->s($discussion['at']); ?></td>
+												<td><?php $this->s(isset($discussion['contact']) ? $discussion['contact'] . ' (' . $discussion['number'] . ')' : $discussion['number']); ?></td>
 											</tr>
 											<?php
 										}

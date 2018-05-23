@@ -1,7 +1,7 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Forget Password')
+	$this->render('incs/head', ['title' => 'Forget Password'])
 ?>
 <div class="container-fluid">
 	<div class="row">

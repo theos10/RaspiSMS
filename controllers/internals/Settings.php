@@ -1,8 +1,9 @@
 <?php
+namespace controllers\internals;
 	/**
 	 * Classe des settinges
 	 */
-	class Settings extends InternalController
+	class Settings extends \InternalController
 	{
 
 		/**
@@ -11,10 +12,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des settinges
          */	
-		public static function get_list ($nb_entry = false, $page = false)
+		public function get_list ($nb_entry = false, $page = false)
 		{
 			//Recupération des settinges
-            $modelSettings = new \Models\Settings($this->bdd);
+            $modelSettings = new \models\Settings($this->bdd);
             return $modelSettings->get_list($nb_entry, $nb_entry * $page);
 		}
 
@@ -23,10 +24,10 @@
          * @param string $name : Le nom du setting
          * @return array : Le setting
          */	
-		public static function get_by_name ($name)
+		public function get_by_name ($name)
 		{
 			//Recupération des settinges
-            $modelSettings = new \Models\Settings($this->bdd);
+            $modelSettings = new \models\Settings($this->bdd);
             return $modelSettings->get_by_name($name);
         }
         
@@ -36,9 +37,9 @@
          * @param mixed $value : La nouvelle value du setting
          * @return bool : True si on a bien modifié, false sinon
 		 */
-		public static function update ($name, $value)
+		public function update ($name, $value)
         {
-            $modelSettings = new \Models\Settings($this->bdd);
+            $modelSettings = new \models\Settings($this->bdd);
             return (bool) $modelSettings->update($setting['id'], $setting);
         }
 	}

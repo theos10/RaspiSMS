@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Users - Show All')
+	$this->render('incs/head', ['title' => 'Users - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'users')
+	$this->render('incs/nav', ['page' => 'users'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">

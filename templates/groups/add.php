@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Groups - Add')
+	$this->render('incs/head', ['title' => 'Groups - Add'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'groups')
+	$this->render('incs/nav', ['page' => 'groups'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">

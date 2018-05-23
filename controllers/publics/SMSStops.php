@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des sms_stops
 	 */
-	class SMSStops extends Controller
+	class SMSStops extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -26,7 +27,7 @@
 		 */	
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $sms_stops = $this->internalSMSStops->get_list(25, $page);
             $this->render('sms_stops/list', ['sms_stops' => $sms_stops]);
         }    

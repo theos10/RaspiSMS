@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Discussions - Show All')
+	$this->render('incs/head', ['title' => 'Discussions - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'discussions')
+	$this->render('incs/nav', ['page' => 'discussions'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">
-						Discussion <small><?php secho($contact ? $contact . ' (' . $number . ')' : $number); ?></small>
+						Discussion <small><?php $this->s($contact ? $contact . ' (' . $number . ')' : $number); ?></small>
 					</h1>
 					<ol class="breadcrumb">
 						<li>
@@ -23,7 +23,7 @@
 							<i class="fa fa-comments-o"></i> <a href="<?php echo $this->generateUrl('discussions'); ?>">Discussions</a>
 						</li>
 						<li class="active">
-							<?php secho($number); ?>
+							<?php $this->s($number); ?>
 						</li>
 					</ol>
 				</div>
@@ -36,9 +36,9 @@
 				</div>
 				<div class="col-lg-12 message-input-container">
 					<div class="discussion-message message-input">
-						<form class="send-message-discussion" action="<?php secho($this->generateUrl('discussions', 'send', [$_SESSION['csrf']])); ?>" method="POST">
+						<form class="send-message-discussion" action="<?php $this->s($this->generateUrl('discussions', 'send', [$_SESSION['csrf']])); ?>" method="POST">
 							<textarea name="content" placeholder="Envoyer un message..."></textarea>
-							<input type="hidden" name="numbers[]" value="<?php secho($number); ?>" />
+							<input type="hidden" name="numbers[]" value="<?php $this->s($number); ?>" />
 							<button class="btn" ><span class="fa fa-fw fa-send-o"></span> Envoyer</button>
 						</form>
 					</div>
@@ -57,7 +57,7 @@
 		 */
 		function getmessages ()
 		{
-			ajaxTransactionId = Date.now();
+			ajaxTransactionId = \Date.now();
 			jQuery.getJSON(HTTP_PWD + "/discussions/getmessages/<?php echo htmlspecialchars(urlencode($number)); ?>/" + ajaxTransactionId , function( data ) {
 				if (data.transactionId != ajaxTransactionId)
 				{

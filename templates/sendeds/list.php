@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Sendeds - Show All')
+	$this->render('incs/head', ['title' => 'Sendeds - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'sendeds')
+	$this->render('incs/nav', ['page' => 'sendeds'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -52,12 +52,12 @@
 										{
 											?>
 											<tr>
-												<td><?php secho($sended['id']); ?></td>
-												<td><?php secho($sended['target']); ?></td>
-												<td><?php secho($sended['content']); ?></td>
-												<td><?php secho($sended['at']); ?></td>
-												<td><?php secho($sended['delivered'] ? 'Délivré' : ($sended['failed'] ? 'Échoué' : 'Inconnu')); ?></td>
-												<?php if ($_SESSION['admin']) { ?><td><input type="checkbox" value="<?php secho($sended['id']); ?>"></td><?php } ?>
+												<td><?php $this->s($sended['id']); ?></td>
+												<td><?php $this->s($sended['target']); ?></td>
+												<td><?php $this->s($sended['content']); ?></td>
+												<td><?php $this->s($sended['at']); ?></td>
+												<td><?php $this->s($sended['delivered'] ? 'Délivré' : ($sended['failed'] ? 'Échoué' : 'Inconnu')); ?></td>
+												<?php if ($_SESSION['admin']) { ?><td><input type="checkbox" value="<?php $this->s($sended['id']); ?>"></td><?php } ?>
 											</tr>
 											<?php
 										}
@@ -87,7 +87,7 @@
 										}
 
 										$numero_page = 'Page : ' . ($page + 1);
-										secho($numero_page);
+										$this->s($numero_page);
 
 										if ($limit == $nbResults)
 										{

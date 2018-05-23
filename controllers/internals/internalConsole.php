@@ -1,5 +1,6 @@
 <?php
-	class internalConsole extends Controller
+namespace controllers\internals;
+	class internalConsole extends \Controller
 	{
 
 		/**
@@ -78,7 +79,7 @@
 			
 			for ($i = 0; $i < 30; $i++)
 			{			
-				$now = new DateTime();
+				$now = new \DateTime();
 				$now = $now->format('Y-m-d H:i:s');
 
 				echo "Début de l'envoi des SMS programmés\n";
@@ -154,8 +155,8 @@
 
 						echo "	Envoi d'un SMS au " . $number . "\n";
 						//On ajoute le SMS aux SMS envoyés
-						//Pour plus de précision, on remet la date à jour en réinstanciant l'objet DateTime (et on reformatte la date, bien entendu)
-						$now = new DateTime();
+						//Pour plus de précision, on remet la date à jour en réinstanciant l'objet \DateTime (et on reformatte la date, bien entendu)
+						$now = new \DateTime();
 						$now = $now->format('Y-m-d H:i:s');
 
 						//On peut maintenant ajouter le SMS
@@ -261,8 +262,8 @@
 						$this->wlog('Delivered or Failed SMS for ' . $number);
 
 						//On récupère les SMS pas encore validé, uniquement sur les dernières 12h
-						$now = new DateTime();
-						$interval = new DateInterval('PT12H');
+						$now = new \DateTime();
+						$interval = new \DateInterval('PT12H');
 						$sinceDate = $now->sub($interval)->format('Y-m-d H:i:s');
 	
 						if (!$sendeds = $db->getFromTableWhere('sendeds', ['target' => $number, 'delivered' => false, 'failed' => false, '>at' => $sinceDate], 'at', false, 1))

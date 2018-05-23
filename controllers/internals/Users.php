@@ -1,8 +1,9 @@
 <?php
+namespace controllers\internals;
 	/**
      * Controller interne des users
 	 */
-	class Users extends InternalController
+	class Users extends \InternalController
 	{
 		/**
          * Cette fonction retourne une liste des useres sous forme d'un tableau
@@ -10,10 +11,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des useres
          */	
-		public static function get_list ($nb_entry = false, $page = false)
+		public function get_list ($nb_entry = false, $page = false)
 		{
 			//Recupération des useres
-            $modelUsers = new \Models\Users($this->bdd);
+            $modelUsers = new \models\Users($this->bdd);
             return $modelUsers->get_list($nb_entry, $nb_entry * $page);
         }
         
@@ -22,9 +23,9 @@
 		 * @param array $ids : Les id des useres à supprimer
 		 * @return int : Le nombre de useres supprimées;
 		 */
-		public static function delete ($ids)
+		public function delete ($ids)
         {
-            $modelUsers = new \Models\Users($this->bdd);
+            $modelUsers = new \models\Users($this->bdd);
             return $modelUsers->delete_by_ids($ids);
 		}
 
@@ -86,9 +87,9 @@
          * Cette fonction met à jour une série de users
          * @return int : le nombre de ligne modifiées
 		 */
-		public static function update ($users)
+		public function update ($users)
         {
-            $modelUsers = new \Models\Users($this->bdd);
+            $modelUsers = new \models\Users($this->bdd);
             
             $nb_update = 0;
             foreach ($users as $user)
@@ -109,10 +110,10 @@
          * @param array $user : Un tableau représentant la usere à insérer
          * @return mixed bool|int : false si echec, sinon l'id de la nouvelle usere insérée
 		 */
-        public static function create ($user)
+        public function create ($user)
         {
             $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
-            $modelUsers = new \Models\Users($this->bdd);
+            $modelUsers = new \models\Users($this->bdd);
             return $modelUsers->insert($user);
 		}
 	}

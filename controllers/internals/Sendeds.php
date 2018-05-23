@@ -1,8 +1,9 @@
 <?php
+namespace controllers\internals;
 	/**
 	 * Classe des sendedes
 	 */
-	class Sendeds extends InternalController
+	class Sendeds extends \InternalController
 	{
 
 		/**
@@ -11,10 +12,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des sendedes
          */	
-		public static function get_list ($nb_entry = false, $page = false)
+		public function get_list ($nb_entry = false, $page = false)
 		{
 			//Recupération des sendedes
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             return $modelSendeds->get_list($nb_entry, $nb_entry * $page);
 		}
 
@@ -23,10 +24,10 @@
          * @param array int $ids : Les ids des entrées à retourner
          * @return array : La liste des sendedes
          */	
-		public static function get_by_ids ($ids)
+		public function get_by_ids ($ids)
 		{
 			//Recupération des sendedes
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             return $modelSendeds->get_by_ids($ids);
         }
 
@@ -37,7 +38,7 @@
          */
         public function get_lasts_by_date ($nb_entry = false)
         {
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             return $modelSendeds->get_lasts_by_date($nb_entry);
         }
         
@@ -46,10 +47,10 @@
          * @param string $target : Le numéro de à qui est envoyé le message
          * @return array : La liste des sendeds
          */	
-		public static function get_by_target ($target)
+		public function get_by_target ($target)
 		{
 			//Recupération des sendeds
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             return $modelSendeds->get_by_target($target);
         }
 
@@ -59,9 +60,9 @@
 		 * @param array $ids : Les id des sendedes à supprimer
 		 * @return int : Le nombre de sendedes supprimées;
 		 */
-		public static function delete ($ids)
+		public function delete ($ids)
         {
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             return $modelSendeds->delete_by_ids($ids);
 		}
 
@@ -70,9 +71,9 @@
          * @param array $sended : Un tableau représentant la sendede à insérer
          * @return mixed bool|int : false si echec, sinon l'id de la nouvelle sendede insérée
 		 */
-        public static function create ($sended)
+        public function create ($sended)
 		{
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             return $modelSendeds->create($sended);
 		}
 
@@ -80,9 +81,9 @@
          * Cette fonction met à jour une série de sendedes
          * @return int : le nombre de ligne modifiées
 		 */
-		public static function update ($sendeds)
+		public function update ($sendeds)
         {
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
             
             $nb_update = 0;
             foreach ($sendeds as $sended)
@@ -97,6 +98,16 @@
         
             return $nb_update;
         }
+        
+        /**
+         * Cette fonction permet de compter le nombre de sendeds
+         * @return int : Le nombre d'entrées dans la table
+         */
+        public function count ()
+        {
+            $modelSendeds = new \models\Sendeds($this->bdd);
+            return $modelSendeds->count();
+        }
 
         /**
          * Cette fonction compte le nombre de sendeds par jour depuis une date
@@ -104,7 +115,7 @@
          */
         public function count_by_day_since ($date)
         {
-            $modelSendeds = new \Models\Sendeds($this->bdd);
+            $modelSendeds = new \models\Sendeds($this->bdd);
 
             $counts_by_day = $modelSendeds->count_by_day_since($date);
             $return = [];

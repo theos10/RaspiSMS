@@ -1,8 +1,9 @@
 <?php
+namespace controllers\internals;
 	/**
 	 * Classe des receivedes
 	 */
-	class Receiveds extends InternalController
+	class Receiveds extends \InternalController
 	{
 
 		/**
@@ -11,10 +12,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des receivedes
          */	
-		public static function get_list ($nb_entry = false, $page = false)
+		public function get_list ($nb_entry = false, $page = false)
 		{
 			//Recupération des receivedes
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_list($nb_entry, $nb_entry * $page);
 		}
 
@@ -23,25 +24,13 @@
          * @param array int $ids : Les ids des entrées à retourner
          * @return array : La liste des receivedes
          */	
-		public static function get_by_ids ($ids)
+		public function get_by_ids ($ids)
 		{
 			//Recupération des receivedes
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_by_ids($ids);
         }
         
-        /**
-         * Cette fonction retourne une liste des receivedes sous forme d'un tableau
-         * @param string $number : Le numéro de à qui est envoyé le message
-         * @return array : La liste des sendeds
-         */	
-		public static function get_by_send_by ($number)
-		{
-			//Recupération des sendeds
-            $modelSendeds = new \Models\Sendeds($this->bdd);
-            return $modelSendeds->get_by_send_by($number);
-        }
-
         /**
          * Cette fonction retourne les X dernières entrées triées par date
          * @param mixed false|int $nb_entry : Nombre d'entrée à retourner ou faux pour tout
@@ -49,7 +38,7 @@
          */
         public function get_lasts_by_date ($nb_entry = false)
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_lasts_by_date($nb_entry);
         }
         
@@ -58,9 +47,9 @@
          * @param string $send_by : Le numéro depuis lequel est envoyé le message
          * @return array : La liste des receiveds
          */	
-		public static function get_by_send_by ($send_by)
+		public function get_by_send_by ($send_by)
 		{
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_by_send_by($send_by);
         }
 
@@ -71,7 +60,7 @@
          */
         public function get_since_by_date ($date)
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_since_by_date($date, $number);
         }
 
@@ -83,7 +72,7 @@
          */
         public function get_since_for_number_by_date ($date, $number)
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_since_for_number_by_date($date, $number);
         }
 
@@ -92,9 +81,9 @@
 		 * @param array $ids : Les id des receivedes à supprimer
 		 * @return int : Le nombre de receivedes supprimées;
 		 */
-		public static function delete ($ids)
+		public function delete ($ids)
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->delete_by_ids($ids);
 		}
 
@@ -103,9 +92,9 @@
          * @param array $received : Un tableau représentant la receivede à insérer
          * @return mixed bool|int : false si echec, sinon l'id de la nouvelle receivede insérée
 		 */
-        public static function create ($received)
+        public function create ($received)
 		{
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->create($received);
 		}
 
@@ -113,9 +102,9 @@
          * Cette fonction met à jour une série de receivedes
          * @return int : le nombre de ligne modifiées
 		 */
-		public static function update ($receiveds)
+		public function update ($receiveds)
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             
             $nb_update = 0;
             foreach ($receiveds as $received)
@@ -132,12 +121,22 @@
         }
 
         /**
+         * Cette fonction permet de compter le nombre de receiveds
+         * @return int : Le nombre d'entrées dans la table
+         */
+        public function count ()
+        {
+            $modelReceiveds = new \models\Receiveds($this->bdd);
+            return $modelReceiveds->count();
+        }
+
+        /**
          * Cette fonction compte le nombre de receiveds par jour depuis une date
          * @return array : un tableau avec en clef la date et en valeure le nombre de sms envoyés
          */
         public function count_by_day_since ($date)
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
 
             $counts_by_day = $modelReceiveds->count_by_day_since($date);
             $return = [];
@@ -156,7 +155,7 @@
          */
         public function get_discussions ()
         {
-            $modelReceiveds = new \Models\Receiveds($this->bdd);
+            $modelReceiveds = new \models\Receiveds($this->bdd);
             return $modelReceiveds->get_discussions();
         }
 	}

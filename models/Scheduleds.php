@@ -49,7 +49,7 @@
 
 		/** 
          * Cette fonction retourne les messages programmés avant une date et pour un numéro
-         * @param DateTime $date : La date avant laquelle on veux le message
+         * @param \DateTime $date : La date avant laquelle on veux le message
          * @param string $number : Le numéro
          * @return array : Les messages programmés avant la date
          */
@@ -124,7 +124,7 @@
          */
         public function insert ($scheduled)
         {
-            $result = $this->insertIntoTable('scheduleds', $scheduleds);
+            $result = $this->insertIntoTable('scheduleds', $scheduled);
 
             if (!$result)
             {
@@ -171,7 +171,7 @@
          */
         public function get_contacts ($id_scheduled)
         {
-            $query = 'SELECT * FROM contacts WHERE id IN (SELECT id FROM scheduleds_contacts WHERE id_scheduled = :id_scheduled)';
+            $query = 'SELECT * FROM contacts WHERE id IN (SELECT id_contact FROM scheduleds_contacts WHERE id_scheduled = :id_scheduled)';
 
             $params = ['id_scheduled' => $id_scheduled];
 
@@ -185,7 +185,7 @@
          */
         public function get_groups ($id_scheduled)
         {
-            $query = 'SELECT * FROM groups WHERE id IN (SELECT id FROM scheduleds_groups WHERE id_scheduled = :id_scheduled)';
+            $query = 'SELECT * FROM groups WHERE id IN (SELECT id_group FROM scheduleds_groups WHERE id_scheduled = :id_scheduled)';
 
             $params = ['id_scheduled' => $id_scheduled];
 
@@ -200,7 +200,7 @@
          */
         public function insert_scheduleds_number ($id_scheduled, $number)
         {
-            $result = $this->insertIntoTable('scheduleds_groups', ['id_scheduled' => $id_scheduled, 'number' => $number]);
+            $result = $this->insertIntoTable('scheduleds_numbers', ['id_scheduled' => $id_scheduled, 'number' => $number]);
 
             if (!$result)
             {

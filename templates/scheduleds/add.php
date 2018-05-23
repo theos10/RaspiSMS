@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Scheduleds - Add')
+	$this->render('incs/head', ['title' => 'Scheduleds - Add'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'scheduleds')
+	$this->render('incs/nav', ['page' => 'scheduleds'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -17,10 +17,10 @@
 					</h1>
 					<ol class="breadcrumb">
 						<li>
-							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('dashboard'); ?>">Dashboard</a>
+							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('Dashboard', 'list'); ?>">Dashboard</a>
 						</li>
 						<li>
-							<i class="fa fa-calendar"></i> <a href="<?php echo $this->generateUrl('scheduleds'); ?>">Scheduleds</a>
+							<i class="fa fa-calendar"></i> <a href="<?php echo $this->generateUrl('Scheduleds', 'list'); ?>">Scheduleds</a>
 						</li>
 						<li class="active">
 							<i class="fa fa-plus"></i> Nouveau
@@ -37,14 +37,14 @@
 							<h3 class="panel-title"><i class="fa fa-calendar fa-fw"></i> Ajout d'un SMS programmé</h3>
 						</div>
 						<div class="panel-body">
-							<form action="<?php echo $this->generateUrl('scheduleds', 'create', [$_SESSION['csrf']]);?>" method="POST">
+							<form action="<?php echo $this->generateUrl('Scheduleds', 'create', ['csrf' => $_SESSION['csrf']]);?>" method="POST">
 								<div class="form-group">
 									<label>Texte du SMS</label>
 									<textarea name="content" class="form-control" required></textarea>
 								</div>
 								<div class="form-group">
 									<label>Date d'envoi du SMS</label>
-									<input name="date" class="form-control form-datetime" type="text" value="<?php secho($now); ?>" readonly>
+									<input name="date" class="form-control form-datetime" type="text" value="<?php $this->s($now); ?>" readonly>
 								</div>	
 								<div class="form-group">
 									<label>Numéros cibles</label>
@@ -74,7 +74,7 @@
 										</div>
 									</div>
 								<?php } ?>
-								<a class="btn btn-danger" href="<?php echo $this->generateUrl('scheduleds'); ?>">Annuler</a>
+								<a class="btn btn-danger" href="<?php echo $this->generateUrl('Scheduleds', 'list'); ?>">Annuler</a>
 								<input type="submit" class="btn btn-success" value="Enregistrer le SMS" /> 	
 							</form>
 						</div>
@@ -90,7 +90,7 @@
 		jQuery('.add-contacts').each(function()
 		{
 			jQuery(this).magicSuggest({
-				data: '<?php echo $this->generateUrl('contacts', 'jsonGetContacts'); ?>',
+				data: '<?php echo $this->generateUrl('Contacts', 'json_list'); ?>',
 				valueField: 'id',
 				displayField: 'name',
 			});
@@ -99,15 +99,15 @@
 		jQuery('.add-groups').each(function()
 		{
 			jQuery(this).magicSuggest({
-				data: '<?php echo $this->generateUrl('groups', 'jsonGetGroups'); ?>',
+				data: '<?php echo $this->generateUrl('Groups', 'json_list'); ?>',
 				valueField: 'id',
 				displayField: 'name',
 			});
 		});
 
 		jQuery('.phone-international-input').intlTelInput({
-			defaultCountry: '<?php secho(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
-			preferredCountries: <?php secho(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
+			defaultCountry: '<?php $this->s(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
+			preferredCountries: <?php $this->s(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
 			nationalMode: true,
 			utilsScript: '<?php echo HTTP_PWD; ?>/js/intlTelInput/lib/libphonenumber/utils.js'
 		});
@@ -129,8 +129,8 @@
 			jQuery(this).before(newScheduledsNumberGroup);
 
 			jQuery('.phone-international-input').intlTelInput({
-				defaultCountry: '<?php secho(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
-				preferredCountries: <?php secho(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
+				defaultCountry: '<?php $this->s(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
+				preferredCountries: <?php $this->s(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
 				nationalMode: true,
 				utilsScript: '<?php echo HTTP_PWD; ?>/js/intlTelInput/lib/libphonenumber/utils.js'
 			});

@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Contacts - Show All')
+	$this->render('incs/head', ['title' => 'Contacts - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'contacts')
+	$this->render('incs/nav', ['page' => 'contacts'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -66,8 +66,8 @@
 	jQuery('document').ready(function($)
 	{
 		jQuery('#phone-international-input').intlTelInput({
-			defaultCountry: '<?php secho(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
-			preferredCountries: <?php secho(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
+			defaultCountry: '<?php $this->s(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
+			preferredCountries: <?php $this->s(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
 			nationalMode: true,
 			utilsScript: '<?php echo HTTP_PWD; ?>/js/intlTelInput/lib/libphonenumber/utils.js'
 		});

@@ -1,8 +1,9 @@
 <?php
+namespace controllers\internals;
 	/**
 	 * Classe des groupes
 	 */
-	class Groups extends InternalController
+	class Groups extends \InternalController
 	{
 
 		/**
@@ -11,10 +12,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des groupes
          */	
-		public static function get_list ($nb_entry = false, $page = false)
+		public function get_list ($nb_entry = false, $page = false)
 		{
 			//Recupération des groupes
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             return $modelGroups->get_list($nb_entry, $nb_entry * $page);
 		}
 
@@ -23,10 +24,10 @@
          * @param array int $ids : Les ids des entrées à retourner
          * @return array : La liste des groupes
          */	
-		public static function get_by_ids ($ids)
+		public function get_by_ids ($ids)
 		{
 			//Recupération des groupes
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             return $modelGroups->get_by_ids($ids);
         }
         
@@ -35,10 +36,10 @@
          * @param string $name : Le name du group
          * @return array : Le group
          */	
-        public static function get_by_name ($name)
+        public function get_by_name ($name)
 		{
 			//Recupération des groupes
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             return $modelGroups->get_by_name($name);
         }
 
@@ -48,7 +49,7 @@
          */
         public function count ()
         {
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             return $modelGroups->count();
         }
 
@@ -57,9 +58,9 @@
 		 * @param array $ids : Les id des groupes à supprimer
 		 * @return int : Le nombre de groupes supprimées;
 		 */
-		public static function delete ($ids)
+		public function delete ($ids)
         {
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             return $modelGroups->delete_by_ids($ids);
 		}
 
@@ -69,9 +70,9 @@
          * @param array $groups_ids : Un tableau des ids des groups
          * @return mixed bool|int : false si echec, sinon l'id de la nouvelle groupe insérée
 		 */
-        public static function create ($group, $groups_ids)
+        public function create ($group, $groups_ids)
 		{
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
         
             if (!$id_group = $modelGroups->insert($group))
             {
@@ -91,9 +92,9 @@
          * @param array $groups : Un tableau avec les groupes et pour chaque groupe une entrée 'groups' avec un tableau des id des groups à lier
          * @return int : le nombre de ligne modifiées
 		 */
-		public static function update ($groups)
+		public function update ($groups)
         {
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             
             $nb_update = 0;
             foreach ($groups as $group)
@@ -123,10 +124,10 @@
          * @param string $id : L'id du group
          * @return array : Un tableau avec les groups
          */	
-        public static function get_groups ($id)
+        public function get_groups ($id)
 		{
 			//Recupération des groupes
-            $modelGroups = new \Models\Groups($this->bdd);
+            $modelGroups = new \models\Groups($this->bdd);
             return $modelGroups->get_groups($id);
         }
 

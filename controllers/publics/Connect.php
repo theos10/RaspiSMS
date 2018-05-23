@@ -1,15 +1,17 @@
 <?php
-	/**
+    namespace controllers\publics;
+
+    /**
 	 * Page de connexion
 	 */
-	class Connect extends Controller
+	class Connect extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -17,8 +19,6 @@
             $this->model = $model;
 
             $this->internalUsers = new \controllers\internals\Users($this->bdd);
-
-			\controllers\internals\Tools::verify_connect();
         }
 
 		/**
@@ -52,7 +52,7 @@
 			$_SESSION['email'] = $user['email'];
 			$_SESSION['transfer'] = $user['transfer'];
 			$_SESSION['csrf'] = str_shuffle(uniqid().uniqid());
-			header('Location: ' . $this->generateUrl(''));
+			header('Location: ' . $this->generateUrl('Dashboard', 'show'));
 			return true;
 		}
 
@@ -82,7 +82,7 @@
 
             $email = $_POST['email'] ?? false;
 
-            if (!$email || !$user = this->internalUsers->get_by_email($email))
+            if (!$email || !$user = $this->internalUsers->get_by_email($email))
             {
                 \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('danger', 'Aucun utilisateur n\'existe pour cette adresse mail.');
                 header('Location: ' . $this->generateUrl('Connect', 'forget_password'));

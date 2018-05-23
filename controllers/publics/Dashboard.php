@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page d'index, qui gère l'affichage par défaut temporairement
 	 */
-	class Dashboard extends Controller
+	class Dashboard extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -19,7 +20,7 @@
             $this->internalSendeds = new \controllers\internals\Sendeds($this->bdd);
             $this->internalReceiveds = new \controllers\internals\Receiveds($this->bdd);
             $this->internalContacts = new \controllers\internals\Contacts($this->bdd);
-            $this->internalGroupss = new \controllers\internals\Groupss($this->bdd);
+            $this->internalGroups = new \controllers\internals\Groups($this->bdd);
             $this->internalScheduleds = new \controllers\internals\Scheduleds($this->bdd);
             $this->internalCommands = new \controllers\internals\Commands($this->bdd);
             $this->internalEvents = new \controllers\internals\Events($this->bdd);
@@ -41,10 +42,12 @@
             $nb_groups = $this->internalGroups->count();
             $nb_scheduleds = $this->internalScheduleds->count();
             $nb_commands = $this->internalCommands->count();
+            $nb_sendeds = $this->internalSendeds->count();
+            $nb_receiveds = $this->internalReceiveds->count();
 
 			//Création de la date d'il y a une semaine
-			$now = new DateTime();
-			$one_week = new DateInterval('P7D');
+			$now = new \DateTime();
+			$one_week = new \DateInterval('P7D');
 			$date = $now->sub($one_week);
 			$formated_date = $date->format('Y-m-d');
 
@@ -60,9 +63,9 @@
 			//On va traduire ces données pour les afficher en graphique
 			$array_area_chart = array();
 			
-			$today_less_7_day = new DateTime();
-			$today_less_7_day->sub(new DateInterval('P7D'));
-			$increment_day = new DateInterval('P1D');
+			$today_less_7_day = new \DateTime();
+			$today_less_7_day->sub(new \DateInterval('P7D'));
+			$increment_day = new \DateInterval('P1D');
 			$i = 0;
 
 			//On va construire un tableau avec la date en clef, et les données pour chaque date
@@ -100,7 +103,7 @@
 			$array_area_chart = array_values($array_area_chart);
 
 
-			$this->render('dashboard/default', array(
+			$this->render('dashboard/show', array(
 				'nb_contacts' => $nb_contacts,
 				'nb_groups' => $nb_groups,
 				'nb_scheduleds' => $nb_scheduleds,

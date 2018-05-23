@@ -4,10 +4,18 @@
 	</footer>
 	<?php if (RASPISMS_SETTINGS_SMS_RECEPTION_SOUND) { ?>
 		<audio id="reception-sound">
-			<source src="<?php echo HTTP_PWD; ?>sounds/receptionSound.ogg" type="audio/ogg">
-			<source src="<?php echo HTTP_PWD; ?>sounds/receptionSound.mp3" type="audio/mpeg">
-			<source src="<?php echo HTTP_PWD; ?>sounds/receptionSound.wav" type="audio/wav">
+			<source src="<?php echo HTTP_PWD; ?>/sounds/receptionSound.ogg" type="audio/ogg">
+			<source src="<?php echo HTTP_PWD; ?>/sounds/receptionSound.mp3" type="audio/mpeg">
+			<source src="<?php echo HTTP_PWD; ?>/sounds/receptionSound.wav" type="audio/wav">
 		</audio>
 	<?php } ?>
-	</body>
+
+    <?php if (ENVIRONMENT == 'dev') { ?>
+		<script>
+			<?php while ($message = \modules\DescartesSessionMessages\internals\DescartesSessionMessages::getNext()) { ?>
+				alert('<?php echo $message['type'] . ' : ' . $message['text']; ?>');
+			<?php } ?>
+		</script>
+    <?php } ?>
+    </body>
 </html>

@@ -1,8 +1,9 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des smsapis
 	 */
-	class SMSAPI extends Controller
+	class SMSAPI extends \Controller
 	{
 		//On défini les constantes qui servent pour les retours d'API
 		const API_ERROR_NO = 0;
@@ -16,7 +17,7 @@
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -114,7 +115,7 @@
 			//Si la date n'est pas définie, on la met à la date du jour
 			if (!$date)
 			{
-				$now = new DateTime();
+				$now = new \DateTime();
 				$date = $now->format('Y-m-d H:i');
 			}
 

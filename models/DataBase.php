@@ -384,7 +384,7 @@
 
 		/**
 		 * Récupère tout les sms programmés non en cours, et dont la date d'envoie inférieure à celle renseignée
-		 * @param string $date : Date avant laquelle on veux les sms
+		 * @param string $date : \Date avant laquelle on veux les sms
 		 * @return array : Tableau avec les sms programmés demandés
 		 */
 		public function getScheduledsNotInProgressBefore($date)

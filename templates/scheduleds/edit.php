@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Scheduleds - Edit')
+	$this->render('incs/head', ['title' => 'Scheduleds - Edit'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'scheduleds')
+	$this->render('incs/nav', ['page' => 'scheduleds'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -17,10 +17,10 @@
 					</h1>
 					<ol class="breadcrumb">
 						<li>
-							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('dashboard'); ?>">Dashboard</a>
+							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('Dashboard', 'show'); ?>">Dashboard</a>
 						</li>
 						<li>
-							<i class="fa fa-calendar"></i> <a href="<?php echo $this->generateUrl('scheduleds'); ?>">Scheduleds</a>
+							<i class="fa fa-calendar"></i> <a href="<?php echo $this->generateUrl('Scheduleds', 'list'); ?>">Scheduleds</a>
 						</li>
 						<li class="active">
 							<i class="fa fa-edit"></i> Modifier
@@ -37,27 +37,24 @@
 							<h3 class="panel-title"><i class="fa fa-edit fa-fw"></i> Modification des SMS programmés</h3>
 						</div>
 						<div class="panel-body">
-							<form action="<?php echo $this->generateUrl('scheduleds', 'update', [$_SESSION['csrf']]);?>" method="POST">
-							<?php
-								foreach ($scheduleds as $scheduled)
-								{
-								?>
-									<div class="form-group">
+							<form action="<?php echo $this->generateUrl('Scheduleds', 'update', ['csrf' => $_SESSION['csrf']]);?>" method="POST">
+							<?php foreach ($scheduleds as $scheduled) { ?>
+                                    <div class="form-group">
 										<label>Texte du SMS</label>
-										<textarea name="scheduleds[<?php secho($scheduled['id']); ?>][content]" class="form-control" required><?php secho($scheduled['content'], true); ?></textarea>
+										<textarea name="scheduleds[<?php $this->s($scheduled['id']); ?>][content]" class="form-control" required><?php $this->s($scheduled['content'], true); ?></textarea>
 									</div>
 									<div class="form-group">
 										<label>Date d'envoi du SMS</label>
-										<input name="scheduleds[<?php secho($scheduled['id']); ?>][date]" class="form-control form-datetime" type="text" value="<?php secho($scheduled['at']); ?>" readonly>
+										<input name="scheduleds[<?php $this->s($scheduled['id']); ?>][date]" class="form-control form-datetime" type="text" value="<?php $this->s($scheduled['at']); ?>" readonly>
 									</div>	
 									<div class="form-group">
 										<label>Numéros cibles</label>
-										<div class="form-group scheduleds-number-group-container" scheduled-id="<?php secho($scheduled['id']); ?>" >
-											<?php foreach($scheduled['numbers'] as $number) { ?>
+										<div class="form-group scheduleds-number-group-container" scheduled-id="<?php $this->s($scheduled['id']); ?>" >
+											<?php foreach ($scheduled['numbers'] as $number) { ?>
 												<div class="form-group scheduleds-number-group">
-													<input name="" class="form-control phone-international-input" type="tel" value="<?php secho($number); ?>">
+													<input name="" class="form-control phone-international-input" type="tel" value="<?php $this->s($number); ?>">
 													<span class="remove-scheduleds-number fa fa-times"></span>
-													<input name="scheduleds[<?php secho($scheduled['id']); ?>][numbers][]" type="hidden" class="phone-hidden-input">
+													<input name="scheduleds[<?php $this->s($scheduled['id']); ?>][numbers][]" type="hidden" class="phone-hidden-input">
 												</div>
 											<?php } ?>
 											<div class="add-number-button fa fa-plus-circle"></div>
@@ -65,11 +62,11 @@
 									</div>
 									<div class="form-group">
 										<label>Contacts cibles</label>
-										<input class="add-contacts form-control" name="scheduleds[<?php secho($scheduled['id']); ?>][contacts][]" value="<?php secho(json_encode($scheduled['contacts'])); ?>" />
+										<input class="add-contacts form-control" name="scheduleds[<?php $this->s($scheduled['id']); ?>][contacts][]" value="<?php $this->s(json_encode($scheduled['contacts'])); ?>" />
 									</div>
 									<div class="form-group">
 										<label>Groupes cibles</label>
-										<input class="add-groups form-control" name="scheduleds[<?php secho($scheduled['id']); ?>][groups][]" value="<?php secho(json_encode($scheduled['groups'])); ?>" />
+										<input class="add-groups form-control" name="scheduleds[<?php $this->s($scheduled['id']); ?>][groups][]" value="<?php $this->s(json_encode($scheduled['groups'])); ?>" />
 									</div>
 									<?php if (RASPISMS_SETTINGS_SMS_FLASH) { ?>
 										<div class="form-group">
@@ -84,7 +81,7 @@
 								<?php
 								}
 							?>
-								<a class="btn btn-danger" href="<?php echo $this->generateUrl('scheduleds'); ?>">Annuler</a>
+								<a class="btn btn-danger" href="<?php echo $this->generateUrl('Scheduleds', 'list'); ?>">Annuler</a>
 								<input type="submit" class="btn btn-success" value="Enregistrer le SMS" /> 	
 							</form>
 						</div>
@@ -108,7 +105,7 @@
 		jQuery('.add-contacts').each(function()
 		{
 			jQuery(this).magicSuggest({
-				data: '<?php echo $this->generateUrl('contacts', 'jsonGetContacts'); ?>',
+				data: '<?php echo $this->generateUrl('Contacts', 'json_list'); ?>',
 				valueField: 'id',
 				displayField: 'name',
 			});
@@ -117,15 +114,15 @@
 		jQuery('.add-groups').each(function()
 		{
 			jQuery(this).magicSuggest({
-				data: '<?php echo $this->generateUrl('groups', 'jsonGetGroups'); ?>',
+				data: '<?php echo $this->generateUrl('Groups', 'json_list'); ?>',
 				valueField: 'id',
 				displayField: 'name',
 			});
 		});
 
 		jQuery('.phone-international-input').intlTelInput({
-			defaultCountry: '<?php secho(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
-			preferredCountries: <?php secho(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
+			defaultCountry: '<?php $this->s(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
+			preferredCountries: <?php $this->s(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
 			nationalMode: true,
 			utilsScript: '<?php echo HTTP_PWD; ?>/js/intlTelInput/lib/libphonenumber/utils.js'
 		});
@@ -148,8 +145,8 @@
 			jQuery(this).before(newScheduledsNumberGroup);
 
 			jQuery('.phone-international-input').intlTelInput({
-				defaultCountry: '<?php secho(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
-				preferredCountries: <?php secho(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
+				defaultCountry: '<?php $this->s(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>',
+				preferredCountries: <?php $this->s(json_encode(explode(',', RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY)), false, false); ?>,
 				nationalMode: true,
 				utilsScript: '<?php echo HTTP_PWD; ?>/js/intlTelInput/lib/libphonenumber/utils.js'
 			});

@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des contacts
 	 */
-	class Contacts extends Controller
+	class Contacts extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -17,6 +18,7 @@
             $this->model = $model;
 
             $this->internalContacts = new \controllers\internals\Contacts($this->bdd);
+            $this->internalEvents = new \controllers\internals\Events($this->bdd);
 
 			\controllers\internals\Tools::verify_connect();
         }
@@ -26,7 +28,7 @@
 		 */	
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $contacts = $this->internalContacts->get_list(25, $page);
             $this->render('contacts/list', ['contacts' => $contacts]);
         }    
@@ -94,7 +96,7 @@
 			$name = $_POST['name'] ?? false;
 			$phone = $_POST['phone'] ?? false;
 
-			if (!$name || !$phone))
+			if (!$name || !$phone)
 			{
                 \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('danger', 'Des champs sont manquants !');
                 header('Location: ' . $this->generateUrl('Contacts', 'add'));
@@ -115,7 +117,7 @@
 				return false;
 			}
 
-			\controllers\internals\Events::create(['type' => 'CONTACT_ADD', 'text' => 'Ajout contact : ' . $name . ' (' . \controllers\internals\Tools::phone_add_space($phone) . ')']);
+			$this->internalEvents->create(['type' => 'CONTACT_ADD', 'text' => 'Ajout contact : ' . $name . ' (' . \controllers\internals\Tools::phone_add_space($phone) . ')']);
 
 			\modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('success', 'Impossible de créer ce contact.');
 			header('Location: ' . $this->generateUrl('Contacts', 'list'));
@@ -154,8 +156,9 @@
 		/**
 		 * Cette fonction retourne la liste des contacts sous forme JSON
 		 */
-		public function jsonGetContacts()
-		{
+		public function json_list()
+        {
+            header('Content-Type: application/json');
             echo json_encode($this->internalContacts->get_list());
 		}
 	}

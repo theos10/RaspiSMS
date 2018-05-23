@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des scheduleds
 	 */
-	class Scheduleds extends Controller
+	class Scheduleds extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -17,6 +18,7 @@
             $this->model = $model;
 
             $this->internalScheduleds = new \controllers\internals\Scheduleds($this->bdd);
+            $this->internalEvents = new \controllers\internals\Events($this->bdd);
 
 			\controllers\internals\Tools::verify_connect();
         }
@@ -26,7 +28,7 @@
 		 */	
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $scheduleds = $this->internalScheduleds->get_list(25, $page);
             $this->render('scheduleds/list', ['scheduleds' => $scheduleds]);
         }    
@@ -74,7 +76,7 @@
         {
             $ids = $_GET['ids'] ?? [];
 
-            $scheduleds = $this->internalScheduleds->getByIds($ids);
+            $scheduleds = $this->internalScheduleds->get_by_ids($ids);
 
             //Pour chaque message on ajoute les numéros, les contacts & les groupes
             foreach ($scheduleds as $key => $scheduled)
@@ -113,7 +115,10 @@
 		 * Cette fonction insert un nouveau scheduled
 		 * @param $csrf : Le jeton CSRF
 		 * @param string $_POST['name'] : Le nom du scheduled
-		 * @param string $_POST['phone'] : Le numero de téléphone du scheduled
+		 * @param string $_POST['date'] : La date d'envoie du scheduled
+		 * @param string $_POST['numbers'] : Les numeros de téléphone du scheduled
+		 * @param string $_POST['contacts'] : Les contacts du scheduled
+		 * @param string $_POST['groups'] : Les groupes du scheduled
 		 */
 		public function create($csrf)
 		{
@@ -143,6 +148,19 @@
                 header('Location: ' . $this->generateUrl('Scheduleds', 'add'));
                 return false;
             }
+            
+            foreach ($numbers as $key => $number)
+            {
+                $number = \controllers\internals\Tools::parse_phone($number);
+
+                if (!$number)
+                {
+                    unset($numbers[$key]);
+                    continue;
+                }
+
+                $numbers[$key] = $number;   
+            }
 
             if (!$numbers && !$contacts && !$groups)
             {
@@ -165,7 +183,7 @@
                 return false;
             }
 
-			\controllers\internals\Events::create(['type' => 'SCHEDULED_ADD', 'text' => 'Ajout d\'un SMS pour le ' . $date . '.']);
+			$this->internalEvents->create(['type' => 'SCHEDULED_ADD', 'text' => 'Ajout d\'un SMS pour le ' . $date . '.']);
 
 			\modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('success', 'Le SMS a bien été créé pour le ' . $date . '.');
 			header('Location: ' . $this->generateUrl('Scheduleds', 'list'));
@@ -210,6 +228,19 @@
                 {
                     $all_update_ok = false;
                     continue;
+                }
+                
+                foreach ($numbers as $key => $number)
+                {
+                    $number = \controllers\internals\Tools::parse_phone($number);
+
+                    if (!$number)
+                    {
+                        unset($numbers[$key]);
+                        continue;
+                    }
+
+                    $numbers[$key] = $number;   
                 }
 
                 if (!$numbers && !$contacts && !$groups)

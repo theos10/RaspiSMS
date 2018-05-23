@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Events - Show All')
+	$this->render('incs/head', ['title' => 'Receiveds - Show All'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'events')
+	$this->render('incs/nav', ['page' => 'receiveds'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -13,14 +13,14 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">
-						Dashboard <small>Évènements</small>
+						Dashboard <small>SMS reçus</small>
 					</h1>
 					<ol class="breadcrumb">
 						<li>
 							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('dashboard'); ?>">Dashboard</a>
 						</li>
 						<li class="active">
-							<i class="fa fa-clock-o"></i> Évènements
+							<i class="fa fa-download "></i> SMS reçus
 						</li>
 					</ol>
 				</div>
@@ -31,31 +31,33 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Liste des évènements</h3>
+							<h3 class="panel-title"><i class="fa fa-download  fa-fw"></i> Liste des SMS reçus</h3>
 						</div>
 						<div class="panel-body">
-							<div class="table-events">
-								<table class="table table-bordered table-hover table-striped" id="table-events">
+							<div class="table-receiveds">
+								<table class="table table-bordered table-hover table-striped" id="table-receiveds">
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Type</th>
+											<th>Numéro</th>
+											<th>Message</th>
 											<th>Date</th>
-											<th>Texte</th>
+											<th>Commande</th>
 											<?php if ($_SESSION['admin']) { ?><th>Sélectionner</th><?php } ?>
 										</tr>
 									</thead>
 									<tbody>
 									<?php
-										foreach ($events as $event)
+										foreach ($receiveds as $received)
 										{
 											?>
 											<tr>
-												<td><?php secho($event['id']); ?></td>
-												<td><span class="fa fa-fw <?php echo internalTools::eventTypeToIcon($event['type']); ?>"></span></td>
-												<td><?php secho($event['at']); ?></td>
-												<td><?php secho($event['text']); ?></td>
-												<?php if ($_SESSION['admin']) { ?><td><input type="checkbox" value="<?php secho($event['id']); ?>"></td><?php } ?>
+												<td><?php $this->s($received['id']); ?></td>
+												<td><?php $this->s($received['send_by']); ?></td>
+												<td><?php $this->s($received['content']); ?></td>
+												<td><?php $this->s($received['at']); ?></td>
+												<td><?php echo $received['is_command'] ? 'Oui' : 'Non'; ?></td>
+												<?php if ($_SESSION['admin']) { ?><td><input type="checkbox" value="<?php $this->s($received['id']); ?>"></td><?php } ?>
 											</tr>
 											<?php
 										}
@@ -67,10 +69,10 @@
 								<?php if ($_SESSION['admin']) { ?>
 									<div class="text-right col-xs-12 no-padding">
 										<strong>Action groupée :</strong> 
-										<div class="btn-group action-dropdown" target="#table-events">
+										<div class="btn-group action-dropdown" target="#table-receiveds">
 											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action pour la sélection <span class="caret"></span></button>
 											<ul class="dropdown-menu pull-right" role="menu">
-												<li><a href="<?php echo $this->generateUrl('events', 'delete', [$_SESSION['csrf']]); ?>"><span class="fa fa-trash-o"></span> Supprimer</a></li>
+												<li><a href="<?php echo $this->generateUrl('receiveds', 'delete', [$_SESSION['csrf']]); ?>"><span class="fa fa-trash-o"></span> Supprimer</a></li>
 											</ul>
 										</div>
 									</div>
@@ -80,22 +82,23 @@
 										if ($page)
 										{
 										?>
-											<li><a href="<?php echo $this->generateUrl('events', 'showAll', array('page' => $page - 1)); ?>"><span aria-hidden="true">&larr;</span> Précèdents</a></li>
+											<li><a href="<?php echo $this->generateUrl('receiveds', 'showAll', array('page' => $page - 1)); ?>"><span aria-hidden="true">&larr;</span> Précèdents</a></li>
 										<?php
 										}
 
 										$numero_page = 'Page : ' . ($page + 1);
-										secho($numero_page);
+										$this->s($numero_page);
 
 										if ($limit == $nbResults)
 										{
 										?>
-											<li><a href="<?php echo $this->generateUrl('events', 'showAll', array('page' => $page + 1)); ?>">Suivants <span aria-hidden="true">&rarr;</span></a></li>
+											<li><a href="<?php echo $this->generateUrl('receiveds', 'showAll', array('page' => $page + 1)); ?>">Suivants <span aria-hidden="true">&rarr;</span></a></li>
 										<?php
 										}
 									?>
 								</ul>
 							</nav>
+							</div>
 						</div>
 					</div>
 				</div>

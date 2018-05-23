@@ -343,10 +343,10 @@
 			$fileLastChange = filemtime($filePath);
 
 			//On calcul la date de mise à jour valide la plus ancienne possible
-			$now = new DateTime();
+			$now = new \DateTime();
 			$propertyName = 'cache' . $titledMethodName;
 			$propertyValue = $controller->$propertyName;
-			$now->sub(new DateInterval('PT' . $propertyValue . 'M'));
+			$now->sub(new \DateInterval('PT' . $propertyValue . 'M'));
 			$maxDate = $now->format('U');
 			
 			//Si le fichier de cache est trop vieux

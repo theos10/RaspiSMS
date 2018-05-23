@@ -1,7 +1,7 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Demande de réinitialisation du mot de passe')
+	$this->render('incs/head', ['title' => 'Demande de réinitialisation du mot de passe'])
 ?>
 <div class="container-fluid">
 	<div class="row">

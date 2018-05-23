@@ -1,6 +1,6 @@
 <?php
 	//Template dashboard
-    $this->render('incs/head', 'Mot de passe ré-initialisé')
+    $this->render('incs/head', ['title' => 'Mot de passe ré-initialisé'])
 ?>
 <div class="container-fluid">
 	<div class="row">

@@ -14,7 +14,7 @@
 		public function __construct()
 		{
 			$this->id = uniqid(); //On défini un id unique pour ce controller
-			$this->callDate = (new DateTime())->format('Y-m-d H:i:s');
+			$this->callDate = (new \DateTime())->format('Y-m-d H:i:s');
 			$this->userIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
 		}
 
@@ -25,8 +25,8 @@
 		 * @return mixed, Faux si le fichier n'existe pas, les variables passées sinon
 		 */
 		protected function render($template, $variables = array())
-		{
-			foreach($variables as $clef => $value)
+        {
+			foreach ($variables as $clef => $value)
 			{
 				$$clef = $value;
 			}

@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Connexion')
+	$this->render('incs/head', ['title' => 'Connexion'])
 ?>
 <div class="container-fluid">
 	<div class="row">
-		<form class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4 connexion-form" action="<?php echo $this->generateUrl('connect', 'connection'); ?>" method="POST">
+		<form class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4 connexion-form" action="<?php echo $this->generateUrl('Connect', 'connection'); ?>" method="POST">
 			<h2>Connexion - RaspiSMS</h2>
 			<div class="form-group">
 				<label>Adresse e-mail</label>

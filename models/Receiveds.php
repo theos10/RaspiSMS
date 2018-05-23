@@ -16,17 +16,6 @@
             return isset($receiveds[0]) ? $receiveds[0] : false;
         }
         
-        /**
-         * Retourne une entrée par son numéro
-         * @param string $number : le numéro qui a envoyé le message
-         * @return array : L'entrée
-         */
-        public function get_by_send_by ($number)
-        {
-            $receiveds = $this->getFromTableWhere('receiveds', ['send_by' => $number]);
-            return isset($receiveds[0]) ? $receiveds[0] : false;
-        }
-
 		/**
 		 * Retourne une liste de receivedes sous forme d'un tableau
          * @param int $limit : Nombre de résultat maximum à retourner
@@ -138,7 +127,7 @@
 
         /**
          * Récupère le nombre de SMS envoyés pour chaque jour depuis une date
-         * @param DateTime $date : La date depuis laquelle on veux les SMS
+         * @param \DateTime $date : La date depuis laquelle on veux les SMS
          * @return array : Tableau avec le nombre de SMS depuis la date
 		 */
 		public function count_by_day_since ($date)

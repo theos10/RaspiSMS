@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Groupes - Edit')
+	$this->render('incs/head', ['title' => 'Groupes - Edit'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'groups')
+	$this->render('incs/nav', ['page' => 'groups'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -53,12 +53,12 @@
 										<label>Nom groupe</label>
 										<div class="form-group input-group">
 											<span class="input-group-addon"><span class="fa fa-user"></span></span>
-											<input name="groups[<?php secho($group['id']); ?>][name]" class="form-control" type="text" placeholder="Nom groupe" autofocus required value="<?php secho($group['name']); ?>">
+											<input name="groups[<?php $this->s($group['id']); ?>][name]" class="form-control" type="text" placeholder="Nom groupe" autofocus required value="<?php $this->s($group['name']); ?>">
 										</div>
 									</div>	
 									<div class="form-group">
 										<label>Contacts du groupe</label>
-										<input class="add-contacts form-control" name="groups[<?php secho($group['id']); ?>][contacts][]" value="<?php secho($contacts); ?>"/>
+										<input class="add-contacts form-control" name="groups[<?php $this->s($group['id']); ?>][contacts][]" value="<?php $this->s($contacts); ?>"/>
 									</div>
 									<hr/>
 									<?php

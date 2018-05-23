@@ -1,8 +1,9 @@
 <?php
+namespace controllers\internals;
 	/**
 	 * Classe des contactes
 	 */
-	class Contacts extends InternalController
+	class Contacts extends \InternalController
 	{
 
 		/**
@@ -11,10 +12,10 @@
          * @param mixed(int|bool) $page : Le numéro de page en cours
          * @return array : La liste des contactes
          */	
-		public static function get_list ($nb_entry = false, $page = false)
+		public function get_list ($nb_entry = false, $page = false)
 		{
 			//Recupération des contactes
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->get_list($nb_entry, $nb_entry * $page);
 		}
 
@@ -23,10 +24,10 @@
          * @param array int $ids : Les ids des entrées à retourner
          * @return array : La liste des contactes
          */	
-		public static function get_by_ids ($ids)
+		public function get_by_ids ($ids)
 		{
 			//Recupération des contactes
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->get_by_ids($ids);
         }
         
@@ -35,10 +36,10 @@
          * @param string $number : Le numéro du contact
          * @return array : Le contact
          */	
-		public static function get_by_number ($number)
+		public function get_by_number ($number)
 		{
 			//Recupération des contactes
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->get_by_number($number);
         }
         
@@ -47,10 +48,10 @@
          * @param string $name : Le name du contact
          * @return array : Le contact
          */	
-        public static function get_by_name ($name)
+        public function get_by_name ($name)
 		{
 			//Recupération des contactes
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->get_by_name($name);
         }
         
@@ -61,7 +62,7 @@
          */
         public function count ()
         {
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->count();
         }
 
@@ -70,9 +71,9 @@
 		 * @param array $ids : Les id des contactes à supprimer
 		 * @return int : Le nombre de contactes supprimées;
 		 */
-		public static function delete ($ids)
+		public function delete ($ids)
         {
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->delete_by_ids($ids);
 		}
 
@@ -81,9 +82,9 @@
          * @param array $contact : Un tableau représentant la contacte à insérer
          * @return mixed bool|int : false si echec, sinon l'id de la nouvelle contacte insérée
 		 */
-        public static function create ($contact)
+        public function create ($contact)
 		{
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             return $modelContacts->insert($contact);
 		}
 
@@ -91,9 +92,9 @@
          * Cette fonction met à jour une série de contactes
          * @return int : le nombre de ligne modifiées
 		 */
-		public static function update ($contacts)
+		public function update ($contacts)
         {
-            $modelContacts = new \Models\Contacts($this->bdd);
+            $modelContacts = new \models\Contacts($this->bdd);
             
             $nb_update = 0;
             foreach ($contacts as $contact)

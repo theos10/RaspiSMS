@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des sendeds
 	 */
-	class Sendeds extends Controller
+	class Sendeds extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -26,7 +27,7 @@
 		 */	
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $sendeds = $this->internalSendeds->get_list(25, $page);
             $this->render('sendeds/list', ['sendeds' => $sendeds, 'page' => $page]);
         }    

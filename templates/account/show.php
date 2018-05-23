@@ -1,7 +1,7 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Profile - Show')
+	$this->render('incs/head', ['title' => 'Profile - Show'])
 ?>
 <div id="wrapper">
 <?php
@@ -40,7 +40,7 @@
 										<h4 class="panel-title"><i class="fa fa-child fa-fw"></i> Mes données</h4>
 									</div>
 									<div class="panel-body">
-										<strong>Adresse e-mail :</strong> <?php secho($_SESSION['email']); ?><br/>
+										<strong>Adresse e-mail :</strong> <?php $this->s($_SESSION['email']); ?><br/>
 										<strong>Niveau administrateur :</strong> <?php echo $_SESSION['admin'] ? 'Oui' : 'Non'; ?><br/>
 									</div>
 								</div>

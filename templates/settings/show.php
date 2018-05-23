@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Réglages')
+	$this->render('incs/head', ['title' => 'Réglages'])
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'settings')
+	$this->render('incs/nav', ['page' => 'settings'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -81,7 +81,7 @@
 										<form action="<?php echo $this->generateUrl('settings', 'change', ['preferred_phone_country', $_SESSION['csrf']]); ?>" method="POST">
 											<div class="form-group">
 												<label>Code des pays (norme ISO 3166-1 alpha-2) séparés par des virgules : </label>
-												<input name="settingValue" class="form-control" value="<?php secho(RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY); ?>" />
+												<input name="settingValue" class="form-control" value="<?php $this->s(RASPISMS_SETTINGS_PREFERRED_PHONE_COUNTRY); ?>" />
 											</div>	
 											<div class="text-center">
 												<button class="btn btn-success">Mettre à jour les données</button>	
@@ -137,7 +137,7 @@
 										<form action="<?php echo $this->generateUrl('settings', 'change', ['default_phone_country', $_SESSION['csrf']]); ?>" method="POST">
 											<div class="form-group">
 												<label>Code du pays (norme ISO 3166-1 alpha-2) : </label>
-												<input name="settingValue" class="form-control" value="<?php secho(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>" />
+												<input name="settingValue" class="form-control" value="<?php $this->s(RASPISMS_SETTINGS_DEFAULT_PHONE_COUNTRY); ?>" />
 											</div>	
 											<div class="text-center">
 												<button class="btn btn-success">Mettre à jour les données</button>	

@@ -1,15 +1,16 @@
 <?php
+namespace controllers\publics;
 	/**
 	 * Page des commandes
 	 */
-	class Commands extends Controller
+	class Commands extends \Controller
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
 		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
-		public function before()
+		public function _before()
         {
             global $bdd;
             global $model;
@@ -17,6 +18,7 @@
             $this->model = $model;
 
             $this->internalCommands = new \controllers\internals\Commands($this->bdd);
+            $this->internalEvents = new \controllers\internals\Events($this->bdd);
 
 			\controllers\internals\Tools::verify_connect();
         }
@@ -26,7 +28,7 @@
          */
         public function list ($page = 0)
         {
-            $page = int($page);
+            $page = (int) $page;
             $commands = $this->internalCommands->getList(25, $page);
             $this->render('commands/list', ['commands' => $commands]);
         }    
@@ -111,7 +113,7 @@
 				return false;
             }
 
-			\controllers\internals\Events::create(['type' => 'COMMAND_ADD', 'text' => 'Ajout commande : ' . $nom . ' => ' . $script]);
+			$this->internalEvents->create(['type' => 'COMMAND_ADD', 'text' => 'Ajout commande : ' . $nom . ' => ' . $script]);
 			
             \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('success', 'La commande a bien été crée.');
 			header('Location: ' . $this->generateUrl('Commands', 'list'));

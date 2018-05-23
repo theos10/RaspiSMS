@@ -1,11 +1,11 @@
 <?php
 	//Template dashboard
 	
-	$this->render('incs/head', 'Dashboard')
+	$this->render('incs/head')
 ?>
 <div id="wrapper">
 <?php
-	$this->render(incs/nav, 'dashboard')
+	$this->render('incs/nav', ['page' => 'dashboard'])
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -38,7 +38,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('contacts') ?>">
+						<a href="<?php echo $this->generateUrl('Contacts', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir vos contacts</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -60,7 +60,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('groups') ?>">
+						<a href="<?php echo $this->generateUrl('Groups', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir les groupes</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -82,7 +82,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('scheduleds') ?>">
+						<a href="<?php echo $this->generateUrl('Scheduleds', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir les SMS programmés</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -104,7 +104,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('commands') ?>">
+						<a href="<?php echo $this->generateUrl('Commands', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir les commandes</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -153,8 +153,8 @@
 										{
 											?>
 											<tr>
-												<td><?php secho($sended['target']); ?></td>
-												<td><?php secho($sended['at']); ?></td>
+												<td><?php $this->s($sended['target']); ?></td>
+												<td><?php $this->s($sended['at']); ?></td>
 											</tr>
 											<?php
 										}
@@ -163,7 +163,7 @@
 								</table>
 							</div>
 							<div class="text-right">
-								<a href="<?php echo $this->generateUrl('sendeds'); ?>">Voir tous les SMS envoyés <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="<?php echo $this->generateUrl('Sendeds', 'list'); ?>">Voir tous les SMS envoyés <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -189,8 +189,8 @@
 										{
 											?>
 											<tr>
-												<td><?php secho($received['send_by']); ?></td>
-												<td><?php secho($received['at']); ?></td>
+												<td><?php $this->s($received['send_by']); ?></td>
+												<td><?php $this->s($received['at']); ?></td>
 												<td><?php echo ($received['is_command']) ? 'Oui' : 'Non'; ?></td>
 											</tr>
 											<?php
@@ -200,7 +200,7 @@
 								</table>
 							</div>
 							<div class="text-right">
-								<a href="<?php echo $this->generateUrl('receiveds'); ?>">Voir tous les SMS reçus <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="<?php echo $this->generateUrl('Receiveds', 'list'); ?>">Voir tous les SMS reçus <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -215,18 +215,18 @@
 								<?php
 									foreach ($events as $event)
 									{
-										$logo = internalTools::eventTypeToIcon($event['type']);
+										$logo = \controllers\internals\Tools::event_type_to_icon($event['type']);
 										?>
 										<a href="#" class="list-group-item">
-											<span class="badge"><?php secho($event['at']); ?></span>
-											<i class="fa fa-fw <?php echo $logo; ?>"></i> <?php secho($event['text']); ?>
+											<span class="badge"><?php $this->s($event['at']); ?></span>
+											<i class="fa fa-fw <?php echo $logo; ?>"></i> <?php $this->s($event['text']); ?>
 										</a>
 										<?php
 									}
 								?>
 							</div>
 							<div class="text-right">
-								<a href="<?php echo $this->generateUrl('events'); ?>">Voirs tous les évènements survenus <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="<?php echo $this->generateUrl('Events', 'list'); ?>">Voirs tous les évènements survenus <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
