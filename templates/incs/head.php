@@ -6,36 +6,36 @@
 		<meta name="author" content="<?php echo WEBSITE_AUTHOR; ?>" />
 		<link rel="icon" type="image/png" href="<?php echo HTTP_PWD_IMG; ?>/favicon.png" />
 		<!-- Bootstrap Core CSS -->
-		<link href="<?php echo HTTP_PWD; ?>/css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo HTTP_PWD_CSS; ?>/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Custom CSS Theme -->
-		<link href="<?php echo HTTP_PWD; ?>/css/sb-admin.css" rel="stylesheet">
+		<link href="<?php echo HTTP_PWD_CSS; ?>/css/sb-admin.css" rel="stylesheet">
 		<!-- Morris Charts CSS -->
-		<link href="<?php echo HTTP_PWD; ?>/css/plugins/morris.css" rel="stylesheet">
+		<link href="<?php echo HTTP_PWD_CSS; ?>/css/plugins/morris.css" rel="stylesheet">
 		<!-- Custom Fonts -->
-		<link href="<?php echo HTTP_PWD; ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="<?php echo HTTP_PWD_FONT; ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Custom CSS site -->
-		<link href="<?php echo HTTP_PWD; ?>/css/style.css" rel="stylesheet">
+		<link href="<?php echo HTTP_PWD_CSS; ?>/css/style.css" rel="stylesheet">
 		<?php
 			$this->render('incs/phptojs');
 		?>
-		<script src="<?php echo HTTP_PWD; ?>/js/jquery.js"></script>
-		<script src="<?php echo HTTP_PWD; ?>/js/bootstrap.min.js"></script>
-		<script src="<?php echo HTTP_PWD; ?>/js/plugins/morris/raphael.min.js"></script>
-		<script src="<?php echo HTTP_PWD; ?>/js/plugins/morris/morris.min.js"></script>
-		<script src="<?php echo HTTP_PWD; ?>/js/Autolinker.min.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/jquery.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/bootstrap.min.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/plugins/morris/raphael.min.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/plugins/morris/morris.min.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/Autolinker.min.js"></script>
 		<!-- Magic Suggest JS and CSS -->
-		<script src="<?php echo HTTP_PWD; ?>/js/magicsuggest.min.js"></script>
-		<link href="<?php echo HTTP_PWD; ?>/css/magicsuggest.css" rel="stylesheet">
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/magicsuggest.min.js"></script>
+		<link href="<?php echo HTTP_PWD_CC; ?>/css/magicsuggest.css" rel="stylesheet">
 		<!-- \Datetime Picked JS and CSS -->
-		<script src="<?php echo HTTP_PWD; ?>/js/bootstrap-datetimepicker.min.js"></script>
-		<script src="<?php echo HTTP_PWD; ?>/js/locales/bootstrap-datetimepicker.fr.js"></script>
-		<link href="<?php echo HTTP_PWD; ?>/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/locales/bootstrap-datetimepicker.fr.js"></script>
+		<link href="<?php echo HTTP_PWD_CSS; ?>/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<!-- International Phone Number, JS and CSS -->
-		<script src="<?php echo HTTP_PWD; ?>/js/intlTelInput/intlTelInput.min.js"></script>
-		<link href="<?php echo HTTP_PWD; ?>/css/intlTelInput.css" rel="stylesheet">
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/intlTelInput/intlTelInput.min.js"></script>
+		<link href="<?php echo HTTP_PWD_CSS; ?>/css/intlTelInput.css" rel="stylesheet">
 		
 		<!-- Custom JS -->
-		<script src="<?php echo HTTP_PWD; ?>/js/custom.js"></script>
+		<script src="<?php echo HTTP_PWD_JS; ?>/js/custom.js"></script>
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

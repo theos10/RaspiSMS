@@ -37,3 +37,8 @@
 	define('PWD_JS', PWD_ASSETS . '/js'); //Chemin dossier des js
 	define('HTTP_PWD_JS', HTTP_PWD_ASSETS . '/js'); //URL dossier des js
 
+	define('PWD_FONT', PWD_ASSETS . '/font'); //Chemin dossier des fonts
+	define('HTTP_PWD_FONT', HTTP_PWD_ASSETS . '/font'); //URL dossier des fonts
+    
+	define('PWD_SOUND', PWD_ASSETS . '/sound'); //Chemin dossier des fonts
+    define('HTTP_PWD_SOUND', HTTP_PWD_ASSETS . '/sound'); //URL dossier des fonts
