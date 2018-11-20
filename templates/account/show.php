@@ -5,7 +5,7 @@
 ?>
 <div id="wrapper">
 <?php
-	$this->render('incs/nav');
+	$this->render('incs/nav', ['page' => 'Account - Show']);
 ?>
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -17,7 +17,7 @@
 					</h1>
 					<ol class="breadcrumb">
 						<li>
-							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('dashboard'); ?>">Dashboard</a>
+							<i class="fa fa-dashboard"></i> <a href="<?php echo $this->generateUrl('Dashboard', 'show'); ?>">Dashboard</a>
 						</li>
 						<li class="active">
 							<i class="fa fa-user"></i> Profil
@@ -40,8 +40,8 @@
 										<h4 class="panel-title"><i class="fa fa-child fa-fw"></i> Mes données</h4>
 									</div>
 									<div class="panel-body">
-										<strong>Adresse e-mail :</strong> <?php $this->s($_SESSION['email']); ?><br/>
-										<strong>Niveau administrateur :</strong> <?php echo $_SESSION['admin'] ? 'Oui' : 'Non'; ?><br/>
+										<strong>Adresse e-mail :</strong> <?php $this->s($_SESSION['user']['email']); ?><br/>
+										<strong>Niveau administrateur :</strong> <?php echo $_SESSION['user']['admin'] ? 'Oui' : 'Non'; ?><br/>
 									</div>
 								</div>
 								<div class="panel panel-default">
@@ -49,15 +49,11 @@
 										<h4 class="panel-title"><i class="fa fa-key fa-fw"></i> Modifier mot de passe</h4>
 									</div>
 									<div class="panel-body">
-										<form action="<?php echo $this->generateUrl('profile', 'changePassword', [$_SESSION['csrf']]); ?>" method="POST">
+										<form action="<?php echo $this->generateUrl('Account', 'change_password', ['csrf' => $_SESSION['csrf']]); ?>" method="POST">
 											<div class="form-group">
 												<label>Mot de passe :</label>
 												<input name="password" type="password" class="form-control" placeholder="Nouveau mot de passe" />
 											</div>	
-											<div class="form-group">
-												<label>Vérification mot de passe :</label>
-												<input name="verif_password" type="password" class="form-control" placeholder="Retapez le mot de passe" />
-											</div>
 											<div class="text-center">
 												<button class="btn btn-success">Mettre à jour les données</button>	
 											</div>
@@ -69,7 +65,7 @@
 										<h4 class="panel-title"><i class="fa fa-trash-o fa-fw"></i> Supprimer ce compte</h4>
 									</div>
 									<div class="panel-body">
-										<form action="<?php echo $this->generateUrl('profile', 'delete', [$_SESSION['csrf']]); ?>" method="POST">
+										<form action="<?php echo $this->generateUrl('Account', 'delete', ['csrf' => $_SESSION['csrf']]); ?>" method="POST">
 											<div class="checkbox">
 												<label>
 													<input name="delete_account" type="checkbox" value="1" /> Je suis totalement sûr de vouloir supprimer ce compte 
@@ -88,15 +84,11 @@
 										<h4 class="panel-title"><i class="fa fa-at fa-fw"></i> Modifier e-mail</h4>
 									</div>
 									<div class="panel-body">
-										<form action="<?php echo $this->generateUrl('profile', 'changeEmail', [$_SESSION['csrf']]); ?>" method="POST">
+										<form action="<?php echo $this->generateUrl('Account', 'change_email', ['csrf' => $_SESSION['csrf']]); ?>" method="POST">
 											<div class="form-group">
 												<label>Adresse e-mail :</label>
-												<input name="mail" type="email" class="form-control" placeholder="Nouvelle adresse e-mail" />
+												<input name="email" type="email" class="form-control" placeholder="Nouvelle adresse e-mail" />
 											</div>	
-											<div class="form-group">
-												<label>Vérification e-mail :</label>
-												<input name="verif_mail" type="email" class="form-control" placeholder="Retapez l'adresse e-mail" />
-											</div>
 											<div class="text-center">
 												<button class="btn btn-success">Mettre à jour les données</button>	
 											</div>
@@ -108,12 +100,12 @@
 										<h4 class="panel-title"><i class="fa fa-share fa-fw"></i> Transfert des SMS par e-mail</h4>
 									</div>
 									<div class="panel-body">
-										<form action="<?php echo $this->generateUrl('profile', 'changeTransfer', [$_SESSION['csrf']]); ?>" method="POST">
+										<form action="<?php echo $this->generateUrl('Account', 'change_transfer', ['csrf' => $_SESSION['csrf']]); ?>" method="POST">
 											<div class="form-group">
 												<label>Transfert activé : </label>
 												<select name="transfer" class="form-control">
 													<option value="0">Non</option>
-													<option value="1" <?php echo $_SESSION['transfer'] ? 'selected' : ''; ?>>Oui</option>
+													<option value="1" <?php echo $_SESSION['user']['transfer'] ? 'selected' : ''; ?>>Oui</option>
 												</select>
 											</div>	
 											<div class="text-center">

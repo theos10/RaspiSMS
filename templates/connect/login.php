@@ -22,7 +22,7 @@
 				</div>
 			</div>	
 
-			<a class="forget-password-link" href="<?php echo $this->generateUrl('connect', 'forgetPassword'); ?>">Mot de passe oublié ?</a>
+			<a class="forget-password-link" href="<?php echo $this->generateUrl('Connect', 'forget_password'); ?>">Mot de passe oublié ?</a>
 			<button class="btn btn-primary btn-lg btn-block">Connexion</button>
 		</form>
 	</div>

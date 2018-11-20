@@ -3,6 +3,10 @@
 		'Connect' => [
             'login' => '/',
             'connection' => '/connection/',
+            'forget_password' => '/forget_password/',
+            'send_reset_password' => '/send_reset_password/{csrf}/',
+            'reset_password' => '/reset_password/{user_id}/{token}/',
+            'logout' => '/logout/',
         ],
 
         'Dashboard' => [
@@ -10,57 +14,118 @@
         ],
 
         'Account' => [
-            'list' => '/account/',
+            'show' => '/account/',
+            'change_password' => '/account/change_password/{csrf}/',
+            'change_transfer' => '/account/change_transfer/{csrf}/',
+            'change_email' => '/account/change_email/{csrf}/',
+            'delete' => '/account/delete/{csrf}/',
+            'logout' => '/logout/',
         ],
 
-        'Commands' => [
-            'list' => '/commands/',
+        'Command' => [
+            'list' => [
+                '/command/',
+                '/command/p/{page}/',
+            ],
+            'add' => '/command/add/',
+            'create' => '/command/create/{csrf}/',
+            'delete' => '/command/delete/{csrf}/',
+            'edit' => '/command/edit/',
+            'update' => '/command/update/{csrf}/',
         ],
 
-        'Contacts' => [
-            'list' => '/contacts/',
+        'Contact' => [
+            'list' => [
+                '/contact/',
+                '/contact/p/{page}/',
+            ],
+            'add' => '/contact/add/',
+            'create' => '/contact/create/{csrf}/',
+            'delete' => '/contact/delete/{csrf}/',
+            'edit' => '/contact/edit/',
+            'update' => '/contact/update/{csrf}/',
             'json_list' => '/contacts.json/',
         ],
 
-        'Discussions' => [
-            'list' => '/discussions/',
+        'Discussion' => [
+            'list' => [
+                '/discussion/',
+                '/discussion/p/{page}/',
+            ],
+            'show' => '/discussion/show/{number}/',
+            'send' => '/discussion/send/{csrf}/',
+            'get_messages' => '/discussion/getmessage/{number}/{transaction_id}/',
         ],
 
-        'Events' => [
-            'list' => '/events/',
+        'Event' => [
+            'list' => [
+                '/event/',
+                '/event/p/{page}/',
+            ],
+            'delete' => '/event/delete/{csrf}/',
         ],
 
-        'Groups' => [
-            'list' => '/groups/',
-            'json_list' => '/groups.json/',
+        'Groupe' => [
+            'list' => [
+                '/groupe/',
+                '/groupe/p/{page}/',
+            ],
+            'add' => '/groupe/add/',
+            'create' => '/groupe/create/{csrf}/',
+            'delete' => '/groupe/delete/{csrf}/',
+            'edit' => '/groupe/edit/',
+            'update' => '/groupe/update/{csrf}/',
+            'json_list' => '/groupes.json/',
         ],
 
-        'Receiveds' => [
-            'list' => '/receiveds/',
+        'Received' => [
+            'list' => [
+                '/received/',
+                '/received/p/{page}/',
+            ],
+            'delete' => '/received/delete/{csrf}/',
         ],
 
-        'Scheduleds' => [
-            'list' => '/scheduleds/',
-            'add' => '/scheduleds/add/',
-            'create' => '/scheduleds/create/{csrf}/',
-            'edit' => '/scheduleds/edit/',
-            'update' => '/scheduleds/update/{csrf}/',
-            'delete' => '/scheduleds/delete/{csrf}/',
+        'Scheduled' => [
+            'list' => [
+                '/scheduled/',
+                '/scheduled/p/{page}/',
+            ],
+            'add' => '/scheduled/add/',
+            'create' => '/scheduled/create/{csrf}/',
+            'edit' => '/scheduled/edit/',
+            'update' => '/scheduled/update/{csrf}/',
+            'delete' => '/scheduled/delete/{csrf}/',
         ],
 
-        'Sendeds' => [
-            'list' => '/sendeds/',
+        'Sended' => [
+            'list' => [
+                '/sended/',
+                '/sended/p/{page}/',
+            ],
+            'delete' => '/sended/delete/{csrf}/',
         ],
 
-        'Settings' => [
-            'show' => '/settings/',
+        'Setting' => [
+            'show' => '/setting/',
+            'update' => '/setting/update/{setting_name}/{csrf}/',
         ],
 
-        'SMSStops' => [
-            'list' => '/smsstops/',
+        'SMSStop' => [
+            'list' => [
+                '/smsstop/',
+                '/smsstop/p/{page}/',
+            ],
+            'delete' => '/smsstop/delete/{csrf}/',
         ],
 
-        'Users' => [
-            'list' => '/users/',
+        'User' => [
+            'list' => [
+                '/user/',
+                '/user/p/{page}/',
+            ],
+            'add' => '/user/add/',
+            'create' => '/user/create/{csrf}/',
+            'delete' => '/user/delete/{csrf}/',
         ],
 	);

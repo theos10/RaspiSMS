@@ -13,19 +13,17 @@ namespace controllers\publics;
 		public function _before()
         {
             global $bdd;
-            global $model;
             $this->bdd = $bdd;
-            $this->model = $model;
 
-            $this->internalSendeds = new \controllers\internals\Sendeds($this->bdd);
-            $this->internalReceiveds = new \controllers\internals\Receiveds($this->bdd);
-            $this->internalContacts = new \controllers\internals\Contacts($this->bdd);
-            $this->internalGroups = new \controllers\internals\Groups($this->bdd);
-            $this->internalScheduleds = new \controllers\internals\Scheduleds($this->bdd);
-            $this->internalCommands = new \controllers\internals\Commands($this->bdd);
-            $this->internalEvents = new \controllers\internals\Events($this->bdd);
+            $this->internalSended = new \controllers\internals\Sended($this->bdd);
+            $this->internalReceived = new \controllers\internals\Received($this->bdd);
+            $this->internalContact = new \controllers\internals\Contact($this->bdd);
+            $this->internalGroupe = new \controllers\internals\Groupe($this->bdd);
+            $this->internalScheduled = new \controllers\internals\Scheduled($this->bdd);
+            $this->internalCommand = new \controllers\internals\Command($this->bdd);
+            $this->internalEvent = new \controllers\internals\Event($this->bdd);
 
-			\controllers\internals\Tools::verify_connect();
+			\controllers\internals\Tool::verify_connect();
         }
 
 		/**
@@ -38,12 +36,12 @@ namespace controllers\publics;
 			global $db;
 			
 			//Recupération des nombres des 4 panneaux d'accueil
-            $nb_contacts = $this->internalContacts->count();
-            $nb_groups = $this->internalGroups->count();
-            $nb_scheduleds = $this->internalScheduleds->count();
-            $nb_commands = $this->internalCommands->count();
-            $nb_sendeds = $this->internalSendeds->count();
-            $nb_receiveds = $this->internalReceiveds->count();
+            $nb_contacts = $this->internalContact->count();
+            $nb_groupes = $this->internalGroupe->count();
+            $nb_scheduleds = $this->internalScheduled->count();
+            $nb_commands = $this->internalCommand->count();
+            $nb_sendeds = $this->internalSended->count();
+            $nb_receiveds = $this->internalReceived->count();
 
 			//Création de la date d'il y a une semaine
 			$now = new \DateTime();
@@ -52,13 +50,13 @@ namespace controllers\publics;
 			$formated_date = $date->format('Y-m-d');
 
 			//Récupération des 10 derniers SMS envoyés, SMS reçus et evenements enregistrés. Par date.
-            $sendeds = $this->internalSendeds->get_lasts_by_date(10);
-            $receiveds = $this->internalReceiveds->get_lasts_by_date(10);
-            $events = $this->internalEvents->get_lasts_by_date(10);
+            $sendeds = $this->internalSended->get_lasts_by_date(10);
+            $receiveds = $this->internalReceived->get_lasts_by_date(10);
+            $events = $this->internalEvent->get_lasts_by_date(10);
 
 			//Récupération du nombre de SMS envoyés et reçus depuis les 7 derniers jours
-            $nb_sendeds_by_day = $this->internalSendeds->count_by_day_since($formated_date);
-            $nb_receiveds_by_day = $this->internalReceiveds->count_by_day_since($formated_date);
+            $nb_sendeds_by_day = $this->internalSended->count_by_day_since($formated_date);
+            $nb_receiveds_by_day = $this->internalReceived->count_by_day_since($formated_date);
 
 			//On va traduire ces données pour les afficher en graphique
 			$array_area_chart = array();
@@ -105,7 +103,7 @@ namespace controllers\publics;
 
 			$this->render('dashboard/show', array(
 				'nb_contacts' => $nb_contacts,
-				'nb_groups' => $nb_groups,
+				'nb_groupes' => $nb_groupes,
 				'nb_scheduleds' => $nb_scheduleds,
 				'nb_commands' => $nb_commands,
 				'nb_sendeds' => $nb_sendeds,

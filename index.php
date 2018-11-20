@@ -28,14 +28,13 @@
 
 	#########
 	# MODEL #
-	#########
-	//On va appeler un modèle, est l'initialiser
-	$bdd = Model::connect(DATABASE_HOST, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD);
-    
-    $modelSettings = new \models\Settings($bdd);
+    #########
+   
+    $bdd = Model::connect(DATABASE_HOST, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD);
+    $modelSetting = new \models\Setting($bdd);
     
     //On va ajouter les réglages globaux de RaspiSMS modifiables via l'interface
-    $settings = $modelSettings->get_list(false, false);
+    $settings = $modelSetting->get_list(false, false);
 	foreach ($settings as $setting)
 	{
 		define('RASPISMS_SETTINGS_' . mb_convert_case($setting['name'],  MB_CASE_UPPER), $setting['value']);

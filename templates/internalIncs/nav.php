@@ -8,7 +8,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<?php echo $this->generateUrl('dashboard'); ?>">RaspiSMS</a>
+				<a class="navbar-brand" href="<?php echo $this->generateUrl('Dashboard', 'show'); ?>">RaspiSMS</a>
 			</div>
 			<!-- Top Menu Items -->
 			<ul class="nav navbar-right top-nav">
@@ -29,7 +29,7 @@
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav side-nav">
 					<li <?php echo $page == 'dashboard' ? 'class="active"' : ''; ?>>
-						<a href="<?php echo $this->generateUrl('dashboard'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+						<a href="<?php echo $this->generateUrl('Dashboard', 'show'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 					</li>
 					<li <?php echo $page == 'scheduleds' ? 'class="active"' : ''; ?>>
 						<a href="<?php echo $this->generateUrl('scheduleds'); ?>"><i class="fa fa-fw fa-envelope"></i> SMS</a>
@@ -38,16 +38,16 @@
 						<a href="<?php echo $this->generateUrl('discussions'); ?>"><i class="fa fa-fw fa-comments"></i> Discussions</a>
 					</li>
 					<li <?php echo $page == 'commands' ? 'class="active"' : ''; ?>>
-						<a href="<?php echo $this->generateUrl('commands'); ?>"><i class="fa fa-fw fa-terminal"></i> Commandes</a>
+						<a href="<?php echo $this->generateUrl('Command', 'list'); ?>"><i class="fa fa-fw fa-terminal"></i> Commandes</a>
 					</li>
 					<li>
 						<a href="javascript:;" data-toggle="collapse" data-target="#repertoire"><i class="fa fa-fw fa-book"></i> Répertoire <i class="fa fa-fw fa-caret-down"></i></a>
-						<ul id="repertoire" class="collapse <?php echo in_array($page, array('contacts', 'groups')) ? 'in' : ''; ?>">
+						<ul id="repertoire" class="collapse <?php echo in_array($page, array('contacts', 'groupes')) ? 'in' : ''; ?>">
 							<li <?php echo $page == 'contacts' ? 'class="active"' : ''; ?>>
 								<a href="<?php echo $this->generateUrl('contacts'); ?>"><i class="fa fa-fw fa-user"></i> Contacts</a>
 							</li>
-							<li <?php echo $page == 'groups' ? 'class="active"' : ''; ?>>
-								<a href="<?php echo $this->generateUrl('groups'); ?>"><i class="fa fa-fw fa-group"></i> Groupes</a>
+							<li <?php echo $page == 'groupes' ? 'class="active"' : ''; ?>>
+								<a href="<?php echo $this->generateUrl('groupes'); ?>"><i class="fa fa-fw fa-group"></i> Groupes</a>
 							</li>
 						</ul>
 					</li>

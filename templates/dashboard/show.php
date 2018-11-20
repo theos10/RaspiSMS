@@ -38,7 +38,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('Contacts', 'list') ?>">
+						<a href="<?php echo $this->generateUrl('Contact', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir vos contacts</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -55,12 +55,12 @@
 									<i class="fa fa-group fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div class="huge"><?php echo $nb_groups; ?></div>
+									<div class="huge"><?php echo $nb_groupes; ?></div>
 									<div>Groupes</div>
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('Groups', 'list') ?>">
+						<a href="<?php echo $this->generateUrl('Groupe', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir les groupes</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -82,7 +82,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('Scheduleds', 'list') ?>">
+						<a href="<?php echo $this->generateUrl('Scheduled', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir les SMS programmés</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -104,7 +104,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?php echo $this->generateUrl('Commands', 'list') ?>">
+						<a href="<?php echo $this->generateUrl('Command', 'list') ?>">
 							<div class="panel-footer">
 								<span class="pull-left">Voir les commandes</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -138,33 +138,37 @@
 						<div class="panel-heading">
 							<h3 class="panel-title"><i class="fa fa-send fa-fw"></i> SMS Envoyés</h3>
 						</div>
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-striped">
-									<thead>
-										<tr>
-											<th>Numéro</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-									<?php
-										foreach ($sendeds as $sended)
-										{
-											?>
-											<tr>
-												<td><?php $this->s($sended['target']); ?></td>
-												<td><?php $this->s($sended['at']); ?></td>
-											</tr>
-											<?php
-										}
-									?>
-									</tbody>
-								</table>
-							</div>
-							<div class="text-right">
-								<a href="<?php echo $this->generateUrl('Sendeds', 'list'); ?>">Voir tous les SMS envoyés <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
+                        <div class="panel-body">
+                            <?php if (!$sendeds) { ?>
+                                Vous n'avez envoyé aucun SMS pour l'instant.
+                            <?php } else { ?>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Numéro</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            foreach ($sendeds as $sended)
+                                            {
+                                                ?>
+                                                <tr>
+                                                    <td><?php $this->s($sended['target']); ?></td>
+                                                    <td><?php $this->s($sended['at']); ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-right">
+                                    <a href="<?php echo $this->generateUrl('Sended', 'list'); ?>">Voir tous les SMS envoyés <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            <?php } ?>
 						</div>
 					</div>
 				</div>
@@ -173,61 +177,69 @@
 						<div class="panel-heading">
 							<h3 class="panel-title"><i class="fa fa-download fa-fw"></i> SMS Reçus</h3>
 						</div>
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-striped">
-									<thead>
-										<tr>
-											<th>Numéro</th>
-											<th>Date</th>
-											<th>Commande</th>
-										</tr>
-									</thead>
-									<tbody>
-									<?php
-										foreach ($receiveds as $received)
-										{
-											?>
-											<tr>
-												<td><?php $this->s($received['send_by']); ?></td>
-												<td><?php $this->s($received['at']); ?></td>
-												<td><?php echo ($received['is_command']) ? 'Oui' : 'Non'; ?></td>
-											</tr>
-											<?php
-										}
-									?>
-									</tbody>
-								</table>
-							</div>
-							<div class="text-right">
-								<a href="<?php echo $this->generateUrl('Receiveds', 'list'); ?>">Voir tous les SMS reçus <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
+                        <div class="panel-body">
+                            <?php if (!$receiveds) { ?>
+                                Vous n'avez reçu aucun SMS pour l'instant.
+                            <?php } else { ?>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Numéro</th>
+                                                <th>Date</th>
+                                                <th>Commande</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            foreach ($receiveds as $received)
+                                            {
+                                                ?>
+                                                <tr>
+                                                    <td><?php $this->s($received['send_by']); ?></td>
+                                                    <td><?php $this->s($received['at']); ?></td>
+                                                    <td><?php echo ($received['is_command']) ? 'Oui' : 'Non'; ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-right">
+                                    <a href="<?php echo $this->generateUrl('Received', 'list'); ?>">Voir tous les SMS reçus <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            <?php } ?>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Évènement survenus</h3>
+							<h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Évènements survenus</h3>
 						</div>
-						<div class="panel-body">
-							<div class="list-group">
-								<?php
-									foreach ($events as $event)
-									{
-										$logo = \controllers\internals\Tools::event_type_to_icon($event['type']);
-										?>
-										<a href="#" class="list-group-item">
-											<span class="badge"><?php $this->s($event['at']); ?></span>
-											<i class="fa fa-fw <?php echo $logo; ?>"></i> <?php $this->s($event['text']); ?>
-										</a>
-										<?php
-									}
-								?>
-							</div>
-							<div class="text-right">
-								<a href="<?php echo $this->generateUrl('Events', 'list'); ?>">Voirs tous les évènements survenus <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
+                        <div class="panel-body">
+                            <?php if (!$events) { ?>
+                                Aucun évènement n'est encore survenus.
+                            <?php } else { ?>
+                                <div class="list-group">
+                                    <?php
+                                        foreach ($events as $event)
+                                        {
+                                            $logo = \controllers\internals\Tool::event_type_to_icon($event['type']);
+                                            ?>
+                                            <a href="#" class="list-group-item">
+                                                <span class="badge"><?php $this->s($event['at']); ?></span>
+                                                <i class="fa fa-fw <?php echo $logo; ?>"></i> <?php $this->s($event['text']); ?>
+                                            </a>
+                                            <?php
+                                        }
+                                    ?>
+                                </div>
+                                <div class="text-right">
+                                    <a href="<?php echo $this->generateUrl('Event', 'list'); ?>">Voirs tous les évènements survenus <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            <?php } ?>
 						</div>
 					</div>
 				</div>

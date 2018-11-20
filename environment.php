@@ -56,6 +56,7 @@
             'WEBSITE_DESCRIPTION' => '',
             'WEBSITE_AUTHOR' => 'Raspbian-France',
             'APP_SECRET' => 'retyuijokplmrtè34567890',
+            'PWD_SCRIPTS' => PWD . '/scripts',
 
             //Types des emails
             'EMAIL_RESET_PASSWORD' => [
@@ -87,6 +88,7 @@
             'WEBSITE_DESCRIPTION' => '',
             'WEBSITE_AUTHOR' => 'Raspbian-France',
             'APP_SECRET' => 'retyuijokplmrtè34567890',
+            'PWD_SCRIPTS' => PWD . '/scripts',
 
             //Types des emails
             'EMAIL_RESET_PASSWORD' => [

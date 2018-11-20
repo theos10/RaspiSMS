@@ -24,10 +24,10 @@ namespace controllers\publics;
             $this->bdd = $bdd;
             $this->model = $model;
 
-            $this->internalUsers = new \controllers\internals\Users($this->bdd);
-            $this->internalContacts = new \controllers\internals\Contacts($this->bdd);
+            $this->internalUser = new \controllers\internals\User($this->bdd);
+            $this->internalContact = new \controllers\internals\Contact($this->bdd);
 
-			\controllers\internals\Tools::verify_connect();
+			\controllers\internals\Tool::verify_connect();
         }
 
 		/**
@@ -35,7 +35,7 @@ namespace controllers\publics;
 		 * @param string text = Le contenu du SMS
 		 * @param mixed numbers = Les numéros auxquels envoyer les SMS. Soit un seul numéro, et il s'agit d'un string. Soit plusieurs numéros, et il s'agit d'un tableau
 		 * @param mixed contacts = Les noms des contacts auxquels envoyer les SMS. Soit un seul et il s'agit d'un string. Soit plusieurs, et il s'agit d'un tableau
-		 * @param mixed groups = Les noms des groupes auxquels envoyer les SMS. Soit un seul et il s'agit d'un string. Soit plusieurs, et il s'agit d'un tableau
+		 * @param mixed groupes = Les noms des groupes auxquels envoyer les SMS. Soit un seul et il s'agit d'un string. Soit plusieurs, et il s'agit d'un tableau
 		 * @param optionnal string date = La date à laquelle doit être envoyé le SMS. Au format 'Y-m-d H:i'. Si non fourni, le SMS sera envoyé dans 2 minutes
 		 */
         public function api ()
@@ -47,7 +47,7 @@ namespace controllers\publics;
 			$password = isset($_POST['password']) ? $_POST['password'] : $password;
 
 			//Si les identifiants sont incorrect on retourne une erreur
-			$user = $internalUsers->check_credentials($email, $password);
+			$user = $internalUser->check_credentials($email, $password);
 
 			if (!$user)
 			{
@@ -60,12 +60,12 @@ namespace controllers\publics;
 			//On map les variables $_GET
 			$get_numbers = isset($_GET['numbers']) ? $_GET['numbers'] : array();
 			$get_contacts = isset($_GET['contacts']) ? $_GET['contacts'] : array();
-			$get_groups = isset($_GET['groups']) ? $_GET['groups'] : array();
+			$get_groupes = isset($_GET['groupes']) ? $_GET['groupes'] : array();
 			
 			//On map les variables POST
 			$post_numbers = isset($_POST['numbers']) ? $_POST['numbers'] : array();
 			$post_contacts = isset($_POST['contacts']) ? $_POST['contacts'] : array();
-			$post_groups = isset($_POST['groups']) ? $_POST['groups'] : array();
+			$post_groupes = isset($_POST['groupes']) ? $_POST['groupes'] : array();
 
 			//On map le texte et la date à part car c'est les seuls arguments qui ne sera jamais un tableau
 			$text = isset($_GET['text']) ? $_GET['text'] : NULL;
@@ -76,22 +76,22 @@ namespace controllers\publics;
 			//On passe tous les paramètres GET en tableau
 			$get_numbers = is_array($get_numbers) ? $get_numbers : ($get_numbers ? array($get_numbers) : array());
 			$get_contacts = is_array($get_contacts) ? $get_contacts : array($get_contacts);
-			$get_groups = is_array($get_groups) ? $get_groups : array($get_groups);
+			$get_groupes = is_array($get_groupes) ? $get_groupes : array($get_groupes);
 
 			//On passe tous les paramètres POST en tableau
 			$post_numbers = is_array($post_numbers) ? $post_numbers : array($post_numbers);
 			$post_contacts = is_array($post_contacts) ? $post_contacts : array($post_contacts);
-			$post_groups = is_array($post_groups) ? $post_groups : array($post_groups);
+			$post_groupes = is_array($post_groupes) ? $post_groupes : array($post_groupes);
 
 			//On merge les données reçus en GET, et celles en POST
 			$numbers = array_merge($get_numbers, $post_numbers);
 			$contacts = array_merge($get_contacts, $post_contacts);
-			$groups = array_merge($get_groups, $post_groups);
+			$groupes = array_merge($get_groupes, $post_groupes);
 
 			//Pour chaque contact, on récupère l'id du contact
 			foreach ($contacts as $key => $contact)
 			{
-                if (!$contact = $internalContacts->get_by_name($contact))
+                if (!$contact = $internalContact->get_by_name($contact))
 				{
 					unset($contacts[$key]);
 					continue;
@@ -101,15 +101,15 @@ namespace controllers\publics;
 			}
 
 			//Pour chaque groupe, on récupère l'id du groupe
-			foreach ($groups as $key => $name)
+			foreach ($groupes as $key => $name)
 			{
-                if (!$group = $internalContacts->get_by_name($group))
+                if (!$groupe = $internalContact->get_by_name($groupe))
 				{
-					unset($groups[$key]);
+					unset($groupes[$key]);
 					continue;
 				}
 
-				$groups[$key] = $group['id'];
+				$groupes[$key] = $groupe['id'];
 			}
 
 			//Si la date n'est pas définie, on la met à la date du jour
@@ -120,7 +120,7 @@ namespace controllers\publics;
 			}
 
 			//Si il manque des champs essentiels, on leve une erreur
-			if (!$text || (!$numbers && !$contacts && !$groups))
+			if (!$text || (!$numbers && !$contacts && !$groupes))
 			{
 				echo json_encode(array(
 					'error' => self::API_ERROR_MISSING_FIELD,
@@ -129,7 +129,7 @@ namespace controllers\publics;
 			}
 
 			//On assigne les variable POST (après avoir vidé $_POST) en prévision de la création du SMS
-            if (!$this->internalScheduleds->create(['at' => $date, 'content' => $text], $numbers, $contacts, $groups))
+            if (!$this->internalScheduled->create(['at' => $date, 'content' => $text], $numbers, $contacts, $groupes))
             {
 				echo json_encode(array(
                     'error' => self::API_ERROR_CREATION_FAILED,

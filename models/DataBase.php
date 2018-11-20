@@ -14,7 +14,7 @@
 		{
 			$query = "
 				SELECT COUNT(id) as nb, DATE_FORMAT(at, '%Y-%m-%d') as at_ymd
-				FROM sendeds
+				FROM sended
 				WHERE at > STR_TO_DATE(:date, '%Y-%m-%d')
 				GROUP BY at_ymd
 			";
@@ -35,7 +35,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM sendeds
+				FROM sended
 				WHERE id = :id";
 		
 			$params = array(
@@ -53,7 +53,7 @@
 		public function deleteSendedsIn($sendeds_ids)
 		{
 			$query = "
-				DELETE FROM sendeds
+				DELETE FROM sended
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -79,7 +79,7 @@
 		public function insertReceived($date, $send_by, $content, $is_command)
 		{
 			$query = '
-				INSERT INTO receiveds(at, send_by, content, is_command)
+				INSERT INTO received(at, send_by, content, is_command)
 				VALUES (:date, :send_by, :content, :is_command)
 			';
 
@@ -102,7 +102,7 @@
 		{
 			$query = "
 				SELECT COUNT(id) as nb, DATE_FORMAT(at, '%Y-%m-%d') as at_ymd
-				FROM receiveds
+				FROM received
 				WHERE at > STR_TO_DATE(:date, '%Y-%m-%d')
 				GROUP BY at_ymd
 			";
@@ -123,7 +123,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM receiveds
+				FROM received
 				WHERE at > STR_TO_DATE(:date, '%Y-%m-%d %h:%i:%s')
 			";
 
@@ -144,7 +144,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM receiveds
+				FROM received
 				WHERE at > STR_TO_DATE(:date, '%Y-%m-%d %h:%i:%s')
 				AND send_by = :number
 				ORDER BY at ASC
@@ -167,7 +167,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM receiveds
+				FROM received
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -186,7 +186,7 @@
 		public function deleteReceivedsIn($receiveds_ids)
 		{
 			$query = "
-				DELETE FROM receiveds
+				DELETE FROM received
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -209,7 +209,7 @@
 		public function deleteContactsIn($contacts_ids)
 		{
 			$query = "
-				DELETE FROM contacts
+				DELETE FROM contact
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -229,7 +229,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM contacts
+				FROM contact
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -252,7 +252,7 @@
 		public function insertGroup($name)
 		{
 			$query = '
-				INSERT INTO groups(name)
+				INSERT INTO group(name)
 				VALUES (:name)
 			';
 
@@ -272,7 +272,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM groups
+				FROM group
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -291,7 +291,7 @@
 		public function deleteGroupsIn($groups_ids)
 		{
 			$query = "
-				DELETE FROM groups
+				DELETE FROM group
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -315,8 +315,8 @@
 		{
 			$query = '
 				SELECT con.id as id, con.name as name, con.number as number
-				FROM groups_contacts as g_c
-				JOIN contacts as con
+				FROM group_contact as g_c
+				JOIN contact as con
 				ON (g_c.id_contact = con.id)
 				WHERE(g_c.id_group = :id_group)
 			';
@@ -336,15 +336,15 @@
 		{
 			$query = "
 				SELECT gro.id as id, gro.name as name, COUNT(g_c.id) as nb_contacts
-				FROM groups as gro
-				LEFT JOIN groups_contacts as g_c
+				FROM group as gro
+				LEFT JOIN group_contact as g_c
 				ON (g_c.id_group = gro.id)
 				GROUP BY id
 			";
 
 			if ($order_by)
 			{
-				if($this->fieldExist($order_by, 'contacts'))
+				if($this->fieldExist($order_by, 'contact'))
 				{
 					$query .= ' ORDER BY '. $order_by;
 					if ($desc) 
@@ -391,7 +391,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM scheduleds
+				FROM scheduled
 				WHERE progress = 0
 				AND at <= :date
 			";
@@ -412,7 +412,7 @@
 		public function insertScheduleds($date, $content)
 		{
 			$query = '
-				INSERT INTO scheduleds(at, content, progress)
+				INSERT INTO scheduled(at, content, progress)
 				VALUES (:date, :content, :progress)
 			';
 
@@ -433,7 +433,7 @@
 		public function deleteScheduledsIn($scheduleds_ids)
 		{
 			$query = "
-				DELETE FROM scheduleds
+				DELETE FROM scheduled
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -454,32 +454,32 @@
 		{
 			$query = "
 				SELECT *
-				FROM scheduleds
+				FROM scheduled
 				WHERE at <= :date
 				AND (
 					id IN (
 						SELECT id_scheduled
-						FROM scheduleds_numbers
+						FROM scheduled_number
 						WHERE number = :number
 					)
 					OR id IN (
 						SELECT id_scheduled
-						FROM scheduleds_contacts
+						FROM scheduled_contact
 						WHERE id_contact IN (
 							SELECT id
-							FROM contacts
+							FROM contact
 							WHERE number = :number
 						)
 					)
 					OR id IN (
 						SELECT id_scheduled
-						FROM scheduleds_groups
+						FROM scheduled_group
 						WHERE id_group IN (
 							SELECT id_group
-							FROM groups_contacts
+							FROM group_contact
 							WHERE id_contact IN (
 								SELECT id
-								FROM contacts
+								FROM contact
 								WHERE number = :number
 							)
 						)
@@ -508,7 +508,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM commands
+				FROM command
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -527,7 +527,7 @@
 		public function deleteCommandsIn($commands_ids)
 		{
 			$query = "
-				DELETE FROM commands
+				DELETE FROM command
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -551,8 +551,8 @@
 		{
 			$query = '
 				SELECT con.id as id, con.name as name, con.number as number
-				FROM scheduleds_contacts as s_c
-				JOIN contacts as con
+				FROM scheduled_contact as s_c
+				JOIN contact as con
 				ON (s_c.id_contact = con.id)
 				WHERE(s_c.id_scheduled = :id_scheduled)
 			';
@@ -572,7 +572,7 @@
 		public function deleteScheduleds_contactsForScheduled($id_scheduled)
 		{
 			$query = '
-				DELETE FROM scheduleds_contacts
+				DELETE FROM scheduled_contact
 				WHERE id_scheduled = :id_scheduled
 			';
 
@@ -591,7 +591,7 @@
 		public function updateProgressScheduledsIn($scheduleds_ids, $progress)
 		{
 			$query = "
-				UPDATE scheduleds
+				UPDATE scheduled
 				SET progress = :progress
 				WHERE id ";
 		
@@ -616,7 +616,7 @@
 		public function deleteScheduleds_numbersForScheduled($id_scheduled)
 		{
 			$query = '
-				DELETE FROM scheduleds_numbers
+				DELETE FROM scheduled_number
 				WHERE id_scheduled = :id_scheduled
 			';
 
@@ -636,7 +636,7 @@
 		{
 			$query = '
 				SELECT *
-				FROM scheduleds_numbers
+				FROM scheduled_number
 				WHERE id_scheduled = :id_scheduled
 			';
 
@@ -659,7 +659,7 @@
 		public function deleteScheduleds_groupsForScheduled($id_scheduled)
 		{
 			$query = '
-				DELETE FROM scheduleds_groups
+				DELETE FROM scheduled_group
 				WHERE id_scheduled = :id_scheduled
 			';
 
@@ -679,8 +679,8 @@
 		{
 			$query = '
 				SELECT gro.id as id, gro.name as name
-				FROM scheduleds_groups as s_g
-				JOIN groups as gro
+				FROM scheduled_group as s_g
+				JOIN group as gro
 				ON (s_g.id_group = gro.id)
 				WHERE(s_g.id_scheduled = :id_scheduled)
 			';
@@ -705,7 +705,7 @@
 		{
 			$query = "
 				SELECT *
-				FROM users
+				FROM user
 				WHERE email = :email";
 		
 			$params = array(
@@ -723,7 +723,7 @@
 		public function deleteUsersIn($users_ids)
 		{
 			$query = "
-				DELETE FROM users
+				DELETE FROM user
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -746,7 +746,7 @@
 		public function updateProgressTransfersIn($transfers_ids, $progress)
 		{
 			$query = "
-				UPDATE transfers
+				UPDATE transfer
 				SET progress = :progress
 				WHERE id ";
 		
@@ -767,7 +767,7 @@
 		public function deleteTransfersIn($transfers_ids)
 		{
 			$query = "
-				DELETE FROM transfers
+				DELETE FROM transfer
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	
@@ -790,7 +790,7 @@
 		public function deleteEventsIn($events_ids)
 		{
 			$query = "
-				DELETE FROM events
+				DELETE FROM event
 				WHERE id ";
 		
 			//On génère la clause IN et les paramètres adaptés depuis le tableau des id	

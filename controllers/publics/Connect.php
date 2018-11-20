@@ -8,7 +8,6 @@
 	{
 		/**
 		 * Cette fonction est appelée avant toute les autres : 
-		 * Elle vérifie que l'utilisateur est bien connecté
 		 * @return void;
 		 */
 		public function _before()
@@ -18,7 +17,7 @@
             $this->bdd = $bdd;
             $this->model = $model;
 
-            $this->internalUsers = new \controllers\internals\Users($this->bdd);
+            $this->internalUser = new \controllers\internals\User($this->bdd);
         }
 
 		/**
@@ -40,20 +39,18 @@
 			$email = $_POST['mail'] ?? false;
             $password = $_POST['password'] ?? false;
 
-			if (!$user = $this->internalUsers->check_credentials($email, $password))
+            $user = $this->internalUser->check_credentials($email, $password);
+			if (!$user)
 			{
                 \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('danger', 'Email ou mot de passe invalide.');
-                header('Location: ' . $this->generateUrl('Connect', 'forget_password'));
-                return false;
+                return header('Location: ' . $this->generateUrl('Connect', 'login'));
 			}
 
-			$_SESSION['connect'] = true;
-			$_SESSION['admin'] = $user['admin'];
-			$_SESSION['email'] = $user['email'];
-			$_SESSION['transfer'] = $user['transfer'];
+            $_SESSION['connect'] = true;
+            $_SESSION['user'] = $user;
 			$_SESSION['csrf'] = str_shuffle(uniqid().uniqid());
-			header('Location: ' . $this->generateUrl('Dashboard', 'show'));
-			return true;
+            
+            return header('Location: ' . $this->generateUrl('Dashboard', 'show'));
 		}
 
 
@@ -81,8 +78,9 @@
             }
 
             $email = $_POST['email'] ?? false;
+            $user = $this->internalUser->get_by_email($email);
 
-            if (!$email || !$user = $this->internalUsers->get_by_email($email))
+            if (!$email || !$user)
             {
                 \modules\DescartesSessionMessages\internals\DescartesSessionMessages::push('danger', 'Aucun utilisateur n\'existe pour cette adresse mail.');
                 header('Location: ' . $this->generateUrl('Connect', 'forget_password'));
@@ -92,9 +90,9 @@
             $Tokenista = new \Ingenerator\Tokenista(APP_SECRET);
             $token = $Tokenista->generate(3600, ['user_id' => $user['id']]);
 
-            $reset_link = $this->generate_url('Connect', 'reset_password', ['user_id' => $user['id'], 'token' => $token]);
+            $reset_link = $this->generateUrl('Connect', 'reset_password', ['user_id' => $user['id'], 'token' => $token]);
 
-            \controllers\internals\Tools::send_email($email, EMAIL_RESET_PASSWORD, ['reset_link' => $reset_link]);
+            \controllers\internals\Tool::send_email($email, EMAIL_RESET_PASSWORD, ['reset_link' => $reset_link]);
 
             return $this->render('connect/send-reset-password');
         }
@@ -121,7 +119,7 @@
                 return $this->render('connect/reset-password');
             }
 
-            $this->internalUsers->update_password($user_id, $password);
+            $this->internalUser->update_password($user_id, $password);
             return $this->render('connect/reset-password-done');
         }
 	
@@ -133,6 +131,6 @@
 		{
 			session_unset();
 			session_destroy();
-			header('Location: ' . $this->generateUrl(''));
+			header('Location: ' . $this->generateUrl('Connect', 'login'));
 		}
 	}
