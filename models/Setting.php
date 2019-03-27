@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $settings = $this->getFromTableWhere('setting', ['id' => $id]);
+            $settings = $this->select('setting', ['id' => $id]);
             return isset($settings[0]) ? $settings[0] : false;
         }
         
@@ -23,7 +23,7 @@
          */
         public function get_by_name ($name)
         {
-            $settings = $this->getFromTableWhere('setting', ['name' => $namer]);
+            $settings = $this->select('setting', ['name' => $namer]);
             return isset($settings[0]) ? $settings[0] : false;
         }
 
@@ -34,7 +34,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $settings = $this->getFromTableWhere('setting', [], '', false, $limit, $offset);
+            $settings = $this->select('setting', [], '', false, $limit, $offset);
 
 	    	return $settings;
 		}

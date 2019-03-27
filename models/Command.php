@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $commands = $this->getFromTableWhere('command', ['id' => $id]);
+            $commands = $this->select('command', ['id' => $id]);
             return isset($commands[0]) ? $commands[0] : false;
         }
 
@@ -23,7 +23,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $commands = $this->getFromTableWhere('command', [], '', false, $limit, $offset);
+            $commands = $this->select('command', [], '', false, $limit, $offset);
 
 	    	return $commands;
 		}

@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $users = $this->getFromTableWhere('user', ['id' => $id]);
+            $users = $this->select('user', ['id' => $id]);
             return isset($users[0]) ? $users[0] : false;
         }
 
@@ -24,7 +24,7 @@
          */
         public function get_by_email ($email)
         {
-            $users = $this->getFromTableWhere('user', ['email' => $email]);
+            $users = $this->select('user', ['email' => $email]);
             return $users ? $users[0] : false;
         }
 
@@ -35,7 +35,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $users = $this->getFromTableWhere('user', [], '', false, $limit, $offset);
+            $users = $this->select('user', [], '', false, $limit, $offset);
 
 	    	return $users;
 		}

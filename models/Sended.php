@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $sendeds = $this->getFromTableWhere('sended', ['id' => $id]);
+            $sendeds = $this->select('sended', ['id' => $id]);
             return isset($sendeds[0]) ? $sendeds[0] : false;
         }
 
@@ -23,7 +23,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $sendeds = $this->getFromTableWhere('sended', [], '', false, $limit, $offset);
+            $sendeds = $this->select('sended', [], '', false, $limit, $offset);
 
 	    	return $sendeds;
 		}
@@ -54,7 +54,7 @@
          */
         public function get_lasts_by_date ($nb_entry)
         {
-            $sendeds = $this->getFromTableWhere('sended', [], 'at', true, $nb_entry);
+            $sendeds = $this->select('sended', [], 'at', true, $nb_entry);
             return $sendeds;
         }
         
@@ -65,7 +65,7 @@
          */	
 		public function get_by_target ($target)
 		{
-            $sendeds = $this->getFromTableWhere('sended', ['target' => $target]);
+            $sendeds = $this->select('sended', ['target' => $target]);
             return $sendeds;
         }
 

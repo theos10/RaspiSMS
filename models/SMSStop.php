@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $smsstops = $this->getFromTableWhere('smsstop', ['id' => $id]);
+            $smsstops = $this->select('smsstop', ['id' => $id]);
             return isset($smsstops[0]) ? $smsstops[0] : false;
         }
         
@@ -23,7 +23,7 @@
          */
         public function get_by_number ($number)
         {
-            $smsstops = $this->getFromTableWhere('smsstop', ['number' => $number]);
+            $smsstops = $this->select('smsstop', ['number' => $number]);
             return isset($smsstops[0]) ? $smsstops[0] : false;
         }
 
@@ -34,7 +34,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $smsstops = $this->getFromTableWhere('smsstop', [], '', false, $limit, $offset);
+            $smsstops = $this->select('smsstop', [], '', false, $limit, $offset);
 
 	    	return $smsstops;
 		}

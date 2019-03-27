@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $contacts = $this->getFromTableWhere('contact', ['id' => $id]);
+            $contacts = $this->select('contact', ['id' => $id]);
             return isset($contacts[0]) ? $contacts[0] : false;
         }
         
@@ -23,7 +23,7 @@
          */
         public function get_by_number ($number)
         {
-            $contacts = $this->getFromTableWhere('contact', ['number' => $number]);
+            $contacts = $this->select('contact', ['number' => $number]);
             return isset($contacts[0]) ? $contacts[0] : false;
         }
         
@@ -34,7 +34,7 @@
          */
         public function get_by_name ($name)
         {
-            $contacts = $this->getFromTableWhere('contact', ['name' => $name]);
+            $contacts = $this->select('contact', ['name' => $name]);
             return isset($contacts[0]) ? $contacts[0] : false;
         }
 
@@ -45,7 +45,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $contacts = $this->getFromTableWhere('contact', [], '', false, $limit, $offset);
+            $contacts = $this->select('contact', [], '', false, $limit, $offset);
 
 	    	return $contacts;
 		}

@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $receiveds = $this->getFromTableWhere('received', ['id' => $id]);
+            $receiveds = $this->select('received', ['id' => $id]);
             return isset($receiveds[0]) ? $receiveds[0] : false;
         }
         
@@ -23,7 +23,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $receiveds = $this->getFromTableWhere('received', [], '', false, $limit, $offset);
+            $receiveds = $this->select('received', [], '', false, $limit, $offset);
 
 	    	return $receiveds;
 		}
@@ -35,7 +35,7 @@
          */
         public function get_lasts_by_date ($nb_entry)
         {
-            $receiveds = $this->getFromTableWhere('received', [], 'at', true, $nb_entry);
+            $receiveds = $this->select('received', [], 'at', true, $nb_entry);
             return $receiveds;
         }
         
@@ -46,7 +46,7 @@
          */	
 		public function get_by_origin ($origin)
 		{
-            $receiveds = $this->getFromTableWhere('received', ['origin' => $origin]);
+            $receiveds = $this->select('received', ['origin' => $origin]);
             return $receiveds;
         }
 

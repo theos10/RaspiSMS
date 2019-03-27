@@ -1,50 +1,42 @@
 <?php
-
     ###############
-	# ENVIRONMENT #
-	###############
-	define('ENVIRONMENT', 'dev');
-	define('FROM_WEB', true);
-	require_once(__DIR__ . '/descartes/load-environment.php');
+    # ENVIRONMENT #
+    ###############
+    require_once(__DIR__ . '/descartes/load-environment.php');
 
-	############
-	# SESSIONS #
-	############
-	session_name(SESSION_NAME);
-	session_start();
+    ###########
+    # ROUTING #
+    ###########
+    require_once(PWD . '/routes.php'); //Include routes
 
-	//On creé le csrf token si il n'existe pas
-	if (!isset($_SESSION['csrf']))
-	{
-		$_SESSION['csrf'] = str_shuffle(uniqid().uniqid());
-	}
+    ############
+    # SESSIONS #
+    ############
+    session_name(SESSION_NAME);
+    session_start();
 
-	##############
-	# INCLUSIONS #
-	##############
-	require_once(PWD . '/descartes/autoload.php');
-	require_once(PWD . '/vendor/autoload.php');
-	require_once(PWD . '/routes.php');
+    //Create csrf token if it didn't exist
+    if (!isset($_SESSION['csrf']))
+    {
+        $_SESSION['csrf'] = str_shuffle(uniqid().uniqid());
+    }
 
-	#########
-	# MODEL #
-    #########
-   
+    ##############
+    # INCLUDE    #
+    ##############
+    //Use autoload
+    require_once(PWD . '/descartes/autoload.php');
+    require_once(PWD . '/vendor/autoload.php');
+
+    #Define raspisms settings
     $bdd = Model::connect(DATABASE_HOST, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD);
-    $modelSetting = new \models\Setting($bdd);
+    $model_setting = new \models\Setting($bdd);
     
-    //On va ajouter les réglages globaux de RaspiSMS modifiables via l'interface
-    $settings = $modelSetting->get_list(false, false);
+    $settings = $model_setting->get_list(false, false);
 	foreach ($settings as $setting)
 	{
 		define('RASPISMS_SETTINGS_' . mb_convert_case($setting['name'],  MB_CASE_UPPER), $setting['value']);
 	}
-    
 
-	###########
-	# ROUTAGE #
-	###########
-	//Partie gérant l'appel des controlleurs
-	$router = new Router($_SERVER['REQUEST_URI'], $descartesRoutes);
-	$router->callRouterForUrl($router->getCallUrl(), $router->getRoutes());
-
+    //Routing current query
+    Router::route(ROUTES, $_SERVER['REQUEST_URI']);

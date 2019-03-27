@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $events = $this->getFromTableWhere('event', ['id' => $id]);
+            $events = $this->select('event', ['id' => $id]);
             return isset($events[0]) ? $events[0] : false;
         }
 
@@ -23,7 +23,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $events = $this->getFromTableWhere('event', [], '', false, $limit, $offset);
+            $events = $this->select('event', [], '', false, $limit, $offset);
 
 	    	return $events;
 		}
@@ -34,7 +34,7 @@
          */
         public function get_lasts_by_date ($nb_entry)
         {
-            $events = $this->getFromTableWhere('event', [], 'at', true, $nb_entry);
+            $events = $this->select('event', [], 'at', true, $nb_entry);
             return $events;
         }
         

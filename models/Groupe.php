@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $groupes = $this->getFromTableWhere('groupe', ['id' => $id]);
+            $groupes = $this->select('groupe', ['id' => $id]);
             return isset($groupes[0]) ? $groupes[0] : false;
         }
         
@@ -23,7 +23,7 @@
          */
         public function get_by_name ($name)
         {
-            $groupes = $this->getFromTableWhere('groupe', ['name' => $name]);
+            $groupes = $this->select('groupe', ['name' => $name]);
             return isset($groupes[0]) ? $groupes[0] : false;
         }
 
@@ -34,7 +34,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $groupes = $this->getFromTableWhere('groupe', [], '', false, $limit, $offset);
+            $groupes = $this->select('groupe', [], '', false, $limit, $offset);
 
 	    	return $groupes;
 		}

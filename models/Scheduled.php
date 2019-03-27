@@ -12,7 +12,7 @@
          */
         public function get_by_id ($id)
         {
-            $scheduleds = $this->getFromTableWhere('scheduled', ['id' => $id]);
+            $scheduleds = $this->select('scheduled', ['id' => $id]);
             return isset($scheduleds[0]) ? $scheduleds[0] : false;
         }
 
@@ -23,7 +23,7 @@
 		 */
 		public function get_list ($limit, $offset)
         {
-            $scheduleds = $this->getFromTableWhere('scheduled', [], '', false, $limit, $offset);
+            $scheduleds = $this->select('scheduled', [], '', false, $limit, $offset);
 
 	    	return $scheduleds;
 		}
@@ -159,7 +159,7 @@
          */
         public function get_number ($id_scheduled)
         {
-            return $this->getFromTableWhere('scheduled_number', ['id_scheduled' => $id_scheduled]);
+            return $this->select('scheduled_number', ['id_scheduled' => $id_scheduled]);
         }
         
         /**
