@@ -5,8 +5,8 @@
 
 	//On définit les chemins
     define('PWD', '/var/www/html/RaspiSMS/'); //On définit le chemin de base du site
-	define('HTTP_ROOT', '/RaspiSMS/'); //On définit la racine d'accès (selon nore vhost)
-	define('HTTP_PORT', '80'); //On définit le port sur lequel est raspisms
+	define('HTTP_ROOT', '/'); //On définit la racine d'accès (selon nore vhost)
+	define('HTTP_PORT', '443'); //On définit le port sur lequel est raspisms
 	define('HTTP_PWD', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost') . ( ((HTTP_PORT != 443 AND isset($_SERVER['HTTPS'])) OR (HTTP_PORT != 80 AND !isset($_SERVER['HTTPS']))) ? ':'. HTTP_PORT : '') . HTTP_ROOT); //On défini l'adresse url du site
 
 	define('PWD_IMG', PWD . 'img/'); //Chemin dossier des images
@@ -31,6 +31,9 @@
 	define('DEFAULT_METHOD', 'byDefault'); //Nom méthode appelée par défaut
 	define('DEFAULT_BEFORE', 'before'); //Nom méthode before par défaut
 
+	// Commande shell
+	define('CMD_SIGNAL',"gammu-smsd-monitor -n 1 -d 0 | grep NetworkSignal | awk '{ print $2 }'");//Commande de recuperation du NetworkSignal
+
 	//Réglages des logs
 	define('LOG_ACTIVATED', 1); //On active les logs
 
@@ -47,4 +50,4 @@
 	define('DATABASE_HOST', 'localhost'); //Hote de la bdd
 	define('DATABASE_NAME', 'raspisms'); //Nom de la bdd
 	define('DATABASE_USER', 'root'); //Utilisateur de la bdd
-	define('DATABASE_PASSWORD', ''); //Password de l'utilisateur
+	define('DATABASE_PASSWORD', 'raspisms'); //Password de l'utilisateur

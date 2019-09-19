@@ -32,6 +32,20 @@ function verifReceived()
 			playReceptionSound();
 		});
 	});
+
+	// XHR permetant de recuperer la valeur du signal reseau.
+	$.ajax({
+		 url : "/gmonitor.php",
+		 type : "GET",
+		 success : function(response){
+		    // Là On traite la réponse qu'a envoyée ton script php
+			//console.log("NetworkSignal " + response);
+			var NetworkSignal = response;
+			$('div_NetworkSignal').html(NetworkSignal); // rafraichi toute ta DIV 
+			javascript:document.getElementById('div_NetworkSignal').innerHTML=NetworkSignal+"%";
+		 }
+		});
+
 }
 
 /**
@@ -113,3 +127,9 @@ jQuery(document).ready(function()
 		});
 	});
 });
+
+$('.horizontal .progress-fill span').each(function(){
+	  var percent = $(this).html();
+	  $(this).parent().css('width', percent);
+});
+
