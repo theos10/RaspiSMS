@@ -9,16 +9,19 @@ Une documentation plus complète sur RaspiSMS est disponible à l'adresse http:/
 
 Mise a jour du 18 09 2019
 
-Modification default.php :
-span -> id
+    Modification default.php :
+    span -> id
 
-custom.js
-fonction ajax
+    custom.js
+    fonction ajax
 
-gmonitor.php
-lecture du signal
+    gmonitor.php
+    lecture du signal
 
-constant.php
-define de la commande
+    constant.php
+    define de la commande
 
-This file
+    This file
+Mise a jour du 4 10 2019
+
+  Modification pour mode responsive sur mobile
