@@ -39,7 +39,7 @@ function verifReceived()
 		 type : "GET",
 		 success : function(response){
 		    // Là On traite la réponse qu'a envoyée ton script php
-			console.log("NetworkSignal " + response);
+			//console.log("NetworkSignal " + response);
 			var NetworkSignal = response;
 			$('div_NetworkSignal').html(NetworkSignal); // rafraichi toute ta DIV 
 			javascript:document.getElementById('div_NetworkSignal').innerHTML=NetworkSignal+"%";
