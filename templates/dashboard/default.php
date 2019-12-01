@@ -133,26 +133,23 @@
 			<!-- /.row -->
 
 			<div class="row">
-                		<div class="col-lg-12">
-                    			<div class="panel panel-default">
-                        			<div class="panel-heading">
-                            				<h3 class="panel-title"><i class="fa fa-area-chart fa-fw"></i> Monitoring</h3>
-	                      			</div>
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-area-chart fa-fw"></i> Monitoring</h3>
+						</div>
 						<div class="panel-body">
 							<span style="color: #5CB85C;">Network Signal :</span><br/>
-   							<div class="container horizontal rounded" >
-								<div class="progress-bar horizontal">
-								    	<div class="progress-track">
-								    		<div class="progress-fill" >
-								        		<span id="div_NetworkSignal">
-							        			Recherche Signal</span>
-								    		</div>
-								    	</div>
-								</div>
-                           				</div>
-                        			</div>
-                  			  </div>
-                		</div>				
+							<div class="progress" id="div_progress">
+								<div class="progress-bar" id="div_bar" style="width:100%">Recherche Signal</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            		</div>	
+			<!-- /.row -->
+            
+			<div class="row">
 				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -251,8 +248,9 @@
 						</div>
 					</div>
 				</div>
-            <!-- /.row -->
 			</div>
+			<!-- /.row -->
+
 		</div>
 		<!-- /.container-fluid -->
 
@@ -280,9 +278,6 @@
 			resize: true
 		});
 	});
-
-	verifReceived();
-	
 </script>
 <!-- /#wrapper -->
 <?php

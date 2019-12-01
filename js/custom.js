@@ -34,18 +34,24 @@ function verifReceived()
 	});
 
 	// XHR permetant de recuperer la valeur du signal reseau.
-	$.ajax({
-		 url : "/controllers/gmonitor.php",
-		 type : "GET",
-		 success : function(response){
-		    // Là On traite la réponse qu'a envoyée ton script php
-			//console.log("NetworkSignal " + response);
-			var NetworkSignal = response;
-			$('div_NetworkSignal').html(NetworkSignal); // rafraichi toute ta DIV 
-			javascript:document.getElementById('div_NetworkSignal').innerHTML=NetworkSignal+"%";
-		 }
-		});
+	    //Attempt to get the element using document.getElementById
+    	var element = document.getElementById("div_bar");
+	if(typeof(element) != 'undefined' && element != null){ 
+    //If it isn't "undefined" and it isn't "null", then it exists.
 
+		$.ajax({
+				 url : "/controllers/gmonitor.php",
+				 type : "GET",
+				 success : function(response){
+				    // Là On traite la réponse qu'a envoyée ton script php
+					//console.log("NetworkSignal " + response);
+					var NetworkSignal = response.replace(/(\r\n|\n|\r)/gm,"");
+					element.innerHTML = NetworkSignal + "%";
+				        element.style.width = NetworkSignal;
+					document.getElementsByClassName('progress-bar').item(0).setAttribute('style','width:'+NetworkSignal+'%');
+				 }
+			});
+	}	
 }
 
 /**
@@ -127,9 +133,3 @@ jQuery(document).ready(function()
 		});
 	});
 });
-
-$('.horizontal .progress-fill span').each(function(){
-	  var percent = $(this).html();
-	  $(this).parent().css('width', percent);
-});
-
